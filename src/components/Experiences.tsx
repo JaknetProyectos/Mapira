@@ -1,5 +1,6 @@
 "use client";
-import { useLocale } from 'next-intl';
+
+import { useLocale } from "next-intl";
 import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -11,97 +12,182 @@ const categoryCards = [
     id: 1,
     number: "01",
     title: "Planes Locales",
-    description: "Recorridos gastronómicos y culturales de medio día en los rincones urbanos más vibrantes.",
-    image: "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg", 
+    description:
+      "Recorridos gastronómicos y culturales de medio día en los rincones urbanos más vibrantes.",
+    image:
+      "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg",
     tag: "Descubrimiento",
-    slug: "plan" // Coincide con la BD
+    slug: "plan", // Coincide con la BD
   },
   {
     id: 2,
     number: "02",
     title: "Experiencias Premium",
-    description: "Inmersión total. Accesos exclusivos a cenotes privados, beach clubs y menús de alta cocina.",
-    image: "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg", 
+    description:
+      "Inmersión total. Accesos exclusivos a cenotes privados, beach clubs y menús de alta cocina.",
+    image:
+      "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg",
     tag: "High-End",
-    slug: "experiencia" // Coincide con la BD
+    slug: "experiencia", // Coincide con la BD
   },
   {
     id: 3,
     number: "03",
     title: "Rutas a la Medida",
-    description: "Itinerarios 100% privados curados por nuestro equipo, adaptados a tus propios tiempos.",
-    image: "https://images.pexels.com/photos/331107/pexels-photo-331107.jpeg", 
+    description:
+      "Itinerarios 100% privados curados por nuestro equipo, adaptados a tus propios tiempos.",
+    image:
+      "https://images.pexels.com/photos/331107/pexels-photo-331107.jpeg",
     tag: "Personalizado",
-    slug: "personalizada" // Coincide con la BD
-  }
+    slug: "personalizada", // Coincide con la BD
+  },
 ];
 
 export function Experiences() {
   const locale = useLocale();
+
   return (
-    <section id="experiencias" className="py-24 lg:py-32 bg-white relative">
-      <div className="container mx-auto px-6 lg:px-12 max-w-screen-xl">
-        
-        {/* Cabecera Editorial */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
-          <div className="max-w-2xl">
-            <div className="mb-4 inline-flex items-center gap-3">
-              <span className="h-[1px] w-8 bg-primary"></span>
-              <span className="text-xs font-bold text-foreground/50 tracking-[0.4em] uppercase">
+    <section
+      id="experiencias"
+      className="relative overflow-hidden bg-[#f2eee4] py-24 text-[#14263d] lg:py-32"
+    >
+      {/* Retícula cartográfica de fondo */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.055]">
+        <div className="absolute left-[8%] top-0 h-full w-px bg-[#14263d]" />
+        <div className="absolute left-[33%] top-0 h-full w-px bg-[#14263d]" />
+        <div className="absolute left-[58%] top-0 h-full w-px bg-[#14263d]" />
+        <div className="absolute left-[83%] top-0 h-full w-px bg-[#14263d]" />
+
+        <div className="absolute left-0 top-[22%] h-px w-full bg-[#14263d]" />
+        <div className="absolute left-0 top-[52%] h-px w-full bg-[#14263d]" />
+        <div className="absolute left-0 top-[82%] h-px w-full bg-[#14263d]" />
+      </div>
+
+      {/* Marcador decorativo */}
+      <div className="pointer-events-none absolute -right-40 top-12 hidden h-[30rem] w-[30rem] rounded-full border border-[#14263d]/10 lg:block">
+        <div className="absolute inset-16 rounded-full border border-[#14263d]/10" />
+        <div className="absolute inset-32 rounded-full border border-[#ff5f49]/20" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-screen-2xl px-6 lg:px-12">
+        {/* Cabecera editorial */}
+        <div className="mb-14 border-b border-[#14263d]/20 pb-10 lg:mb-20">
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <span className="h-2 w-2 bg-[#ff5f49]" />
+
+              <span className="text-[9px] font-bold uppercase tracking-[0.34em] text-[#14263d]/55">
                 <T>Líneas de Viaje</T>
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black mb-4 text-foreground leading-[1.1] tracking-tighter">
-              <T>Colección</T> <span className="font-light italic text-primary"><T>Horizon.</T></span>
-            </h2>
-            <p className="text-lg text-muted-foreground font-medium max-w-md">
-              <T>Desde escapes culinarios de unas horas hasta inmersiones totales en el Caribe. Tú decides la intensidad.</T>
-            </p>
+
+            <span className="hidden font-mono text-[9px] uppercase tracking-[0.24em] text-[#14263d]/35 md:block">
+              Mapira / Atlas 02
+            </span>
           </div>
-          <Link href={`/${locale}/experiencias`} className="hidden md:flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all uppercase tracking-widest text-xs">
-            <T>Ver todas las rutas</T> <ArrowRight className="w-4 h-4" />
-          </Link>
+
+          <div className="grid items-end gap-8 lg:grid-cols-[1fr_360px]">
+            <div>
+              <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.26em] text-[#ff5f49]">
+                Curaduría de rutas
+              </p>
+
+              <h2 className="max-w-4xl text-5xl font-black uppercase leading-[0.88] tracking-[-0.055em] text-[#14263d] sm:text-6xl md:text-7xl lg:text-8xl">
+                <T>Colección</T>
+                <span className="block text-[#ff5f49]">
+                  <T>Mapira.</T>
+                </span>
+              </h2>
+            </div>
+
+            <div className="border-l-2 border-[#ff5f49] pl-5 lg:pb-2">
+              <p className="mb-6 text-sm font-medium leading-relaxed text-[#14263d]/65 md:text-base">
+                <T>
+                  Desde recorridos culinarios de unas horas hasta viajes
+                  inmersivos frente al Caribe. Tú eliges la forma de explorar.
+                </T>
+              </p>
+
+              <Link
+                href={`/${locale}/experiencias`}
+                className="group hidden items-center justify-between border-t border-[#14263d]/20 pt-4 text-[9px] font-bold uppercase tracking-[0.25em] text-[#14263d] transition-colors hover:text-[#ff5f49] md:flex"
+              >
+                <T>Ver todas las rutas</T>
+
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
         </div>
 
-        {/* Grid de 3 Columnas Estilo Revista */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Colección de categorías */}
+        <div className="grid grid-cols-1 border-l border-t border-[#14263d]/20 lg:grid-cols-3">
           {categoryCards.map((cat) => (
             <Link
               key={cat.id}
               href={`/${locale}/experiencias?categoria=${cat.slug}`}
-              className="group block h-[450px] lg:h-[600px]"
+              className="group block border-b border-r border-[#14263d]/20"
             >
-              <Card className="h-full relative overflow-hidden border-none rounded-3xl shadow-none hover:shadow-2xl transition-all duration-500">
-                
-                {/* Imagen de fondo */}
-                <img 
-                  src={cat.image} 
-                  alt={cat.title} 
-                  className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700"
-                />
-                
-                {/* Gradiente de oscurecimiento */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/90 transition-opacity group-hover:opacity-90" />
+              <Card className="relative h-full overflow-hidden rounded-none border-0 bg-transparent shadow-none">
+                {/* Cabecera de ficha */}
+                <div className="flex items-center justify-between border-b border-[#14263d]/20 px-5 py-4">
+                  <span className="font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-[#ff5f49]">
+                    <T>{cat.tag}</T>
+                  </span>
 
-                <div className="absolute inset-0 p-8 flex flex-col justify-between">
-                  {/* Top: Tag y Número */}
-                  <div className="flex justify-between items-start">
-                    <span className="bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-4 py-2 rounded-full uppercase tracking-widest border border-white/20">
-                      <T>{cat.tag}</T>
-                    </span>
-                    <span className="text-3xl font-serif italic text-white/50 group-hover:text-primary transition-colors">
-                      {cat.number}
+                  <span className="font-mono text-[10px] font-bold text-[#14263d]/35">
+                    {cat.number}
+                  </span>
+                </div>
+
+                {/* Imagen */}
+                <div className="relative h-[310px] overflow-hidden bg-[#d9d1c3] sm:h-[390px] lg:h-[430px]">
+                  <img
+                    src={cat.image}
+                    alt={cat.title}
+                    className="absolute inset-0 h-full w-full object-cover grayscale-[15%] transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#14263d]/55 via-transparent to-transparent" />
+
+                  {/* Coordenadas decorativas */}
+                  <div className="absolute left-5 top-5 flex items-center gap-3">
+                    <span className="h-2 w-2 rounded-full bg-[#ff5f49] shadow-[0_0_0_6px_rgba(255,95,73,0.2)]" />
+
+                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/75">
+                      Ruta seleccionada
                     </span>
                   </div>
 
-                  {/* Bottom: Título y Descripción */}
-                  <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <h3 className="text-3xl font-black text-white mb-3 tracking-tight">
+                  <div className="absolute bottom-5 right-5 border border-white/30 bg-[#14263d]/45 px-3 py-2 backdrop-blur-md">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/75">
+                      MX / {cat.number}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Información */}
+                <div className="relative min-h-[250px] bg-[#f2eee4] px-5 py-7 transition-colors duration-300 group-hover:bg-[#e9e2d5] md:px-7 md:py-8">
+                  <div className="mb-6 flex items-start justify-between gap-6">
+                    <h3 className="max-w-[260px] text-2xl font-black uppercase leading-[0.95] tracking-[-0.025em] text-[#14263d] md:text-3xl">
                       <T>{cat.title}</T>
                     </h3>
-                    <p className="text-white/80 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 h-0 group-hover:h-auto overflow-hidden font-medium">
-                      <T>{cat.description}</T>
-                    </p>
+
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#14263d]/20 text-[#14263d] transition-all duration-300 group-hover:border-[#ff5f49] group-hover:bg-[#ff5f49] group-hover:text-white">
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+
+                  <p className="text-sm font-medium leading-relaxed text-[#14263d]/62">
+                    <T>{cat.description}</T>
+                  </p>
+
+                  <div className="mt-8 flex items-center gap-3">
+                    <span className="h-px w-8 bg-[#ff5f49]" />
+
+                    <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-[#14263d]/40">
+                      Explorar categoría
+                    </span>
                   </div>
                 </div>
               </Card>
@@ -109,6 +195,15 @@ export function Experiences() {
           ))}
         </div>
 
+        {/* Enlace móvil */}
+        <Link
+          href={`/${locale}/experiencias`}
+          className="mt-8 flex items-center justify-between border border-[#14263d]/25 px-5 py-5 text-[9px] font-bold uppercase tracking-[0.25em] text-[#14263d] transition-all duration-300 hover:border-[#ff5f49] hover:bg-[#ff5f49] hover:text-white md:hidden"
+        >
+          <T>Ver todas las rutas</T>
+
+          <ArrowRight className="h-4 w-4" />
+        </Link>
       </div>
     </section>
   );

@@ -9,22 +9,21 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-  title: "HorizonTrip | Agencia Boutique de Viajes",
-  description: "Curamos itinerarios excepcionales. Desde santuarios escondidos en la selva hasta retiros privados frente al mar. El arte de viajar sin fricción.",
+  title: "Mapira | Agencia Boutique de Viajes",
+  description:
+    "Diseñamos itinerarios extraordinarios. Desde refugios ocultos entre la selva hasta estancias privadas junto al mar. Una forma de viajar sin complicaciones.",
 };
 
 export default async function RootLayout({
   children,
-  params
+  params,
 }: Props) {
   const resolvedParams = await params;
   const locale = resolvedParams.locale;
 
   return (
     <html lang={locale}>
-      <ClientBody locale={locale}>
-        {children}
-      </ClientBody>
+      <ClientBody locale={locale}>{children}</ClientBody>
     </html>
   );
 }

@@ -1,15 +1,25 @@
 "use client";
-import { useLocale } from 'next-intl';
+
+import { useLocale } from "next-intl";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image"; // IMPORTANTE: Agregamos el componente Image de Next.js
+import Image from "next/image";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
-import { supabase } from '@/lib/supabase';
-import { MapPin, Search, ArrowRight, Loader2, Compass } from "lucide-react";
-import { Experience, SupabaseExperienceResponse } from "@/lib/types";
+import { supabase } from "@/lib/supabase";
+import {
+  MapPin,
+  Search,
+  ArrowRight,
+  Loader2,
+  Compass,
+} from "lucide-react";
+import {
+  Experience,
+  SupabaseExperienceResponse,
+} from "@/lib/types";
 import { T } from "@/components/T";
 import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/card";
@@ -18,45 +28,64 @@ function ExperienciasContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("categoria");
   const locale = useLocale();
+
   const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [categories, setCategories] = useState<{ id: number; name: string; slug: string }[]>([]);
+  const [categories, setCategories] = useState<
+    { id: number; name: string; slug: string }[]
+  >([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    categoryParam
+  );
   const [searchTerm, setSearchTerm] = useState("");
+
   const phSearch = useT("Buscar destino o experiencia...");
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
+
       try {
-        const { data: catData } = await supabase.from('categories_horizon').select('*');
-        if (catData) setCategories(catData);
+        const { data: catData } = await supabase
+          .from("categories_horizon")
+          .select("*");
+
+        if (catData) {
+          setCategories(catData);
+        }
 
         const { data: actData, error: actError } = await supabase
-          .from('activities_horizon')
+          .from("activities_horizon")
           .select(`
             id, title, slug, plan_type, destination, price, description, images, category_id,
             categories:categories_horizon (id, name, slug)
           `);
 
+        if (actError) {
+          console.error("Error al cargar experiencias:", actError);
+        }
+
         if (actData) {
-          const mappedData: Experience[] = (actData as unknown as SupabaseExperienceResponse[]).map((item) => ({
+          const mappedData: Experience[] = (
+            actData as unknown as SupabaseExperienceResponse[]
+          ).map((item) => ({
             id: item.id,
             title: item.title,
             slug: item.slug,
             plan_type: item.plan_type,
             destination: item.destination,
             price: item.price,
-            currency: item.currency || 'MXN',
+            currency: item.currency || "MXN",
             tax_included: item.tax_included !== false,
             description: item.description || "",
-            images: item.images || [], 
+            images: item.images || [],
             category_id: item.category_id,
             categories: item.categories || undefined,
             suggested_route: [],
             included: [],
-            logistics: {}
+            logistics: {},
           }));
+
           setExperiences(mappedData);
         }
       } catch (error) {
@@ -65,152 +94,357 @@ function ExperienciasContent() {
         setLoading(false);
       }
     }
+
     fetchData();
   }, []);
 
   useEffect(() => {
-    if (categoryParam) setSelectedCategory(categoryParam);
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
   }, [categoryParam]);
 
   const filteredExperiences = experiences.filter((exp) => {
-    const matchesCategory = !selectedCategory || exp.categories?.slug === selectedCategory;
-    const matchesSearch = !searchTerm ||
+    const matchesCategory =
+      !selectedCategory ||
+      exp.categories?.slug === selectedCategory;
+
+    const matchesSearch =
+      !searchTerm ||
       exp.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      exp.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      exp.destination.toLowerCase().includes(searchTerm.toLowerCase());
+      exp.description
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      exp.destination
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
     return matchesCategory && matchesSearch;
   });
 
   const formatPrice = (price: number) => {
     const formatter = new Intl.NumberFormat("es-MX", {
-      style: "currency", currency: "MXN", minimumFractionDigits: 0,
+      style: "currency",
+      currency: "MXN",
+      minimumFractionDigits: 0,
     });
+
     return `${formatter.format(price)} MXN`;
   };
 
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <Loader2 className="w-12 h-12 animate-spin text-primary" />
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#eee8dc]">
+        <div className="relative flex h-24 w-24 items-center justify-center border border-[#14263d]/20">
+          <div className="absolute inset-3 border border-[#14263d]/10" />
+
+          <Loader2 className="relative z-10 h-8 w-8 animate-spin text-[#ff5f49]" />
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background selection:bg-primary/20">
+    <div className="flex min-h-screen flex-col bg-[#eee8dc] text-[#14263d] selection:bg-[#ff5f49]/25">
       <Header />
-      <main className="flex-1 pt-32">
-        
-        {/* Cabecera Editorial */}
-        <section className="pb-12 pt-8">
-          <div className="container mx-auto px-6 lg:px-12 max-w-screen-xl text-center md:text-left flex flex-col md:flex-row justify-between items-end gap-8">
-            <div className="max-w-2xl">
-              <div className="mb-6 inline-flex items-center gap-3 justify-center md:justify-start w-full md:w-auto">
-                <span className="h-[1px] w-8 bg-primary"></span>
-                <span className="text-xs font-bold uppercase tracking-[0.3em] text-foreground/60">
-                  <T>Catálogo Oficial</T>
+
+      <main className="relative flex-1 overflow-hidden pt-32 lg:pt-36">
+        {/* Retícula cartográfica */}
+        <div className="pointer-events-none absolute inset-0 opacity-[0.045]">
+          <div className="absolute left-[10%] top-0 h-full w-px bg-[#14263d]" />
+          <div className="absolute left-[35%] top-0 h-full w-px bg-[#14263d]" />
+          <div className="absolute left-[60%] top-0 h-full w-px bg-[#14263d]" />
+          <div className="absolute left-[85%] top-0 h-full w-px bg-[#14263d]" />
+
+          <div className="absolute left-0 top-[18%] h-px w-full bg-[#14263d]" />
+          <div className="absolute left-0 top-[48%] h-px w-full bg-[#14263d]" />
+          <div className="absolute left-0 top-[78%] h-px w-full bg-[#14263d]" />
+        </div>
+
+        {/* Elemento cartográfico decorativo */}
+        <div className="pointer-events-none absolute -right-60 top-8 hidden h-[38rem] w-[38rem] rounded-full border border-[#14263d]/10 xl:block">
+          <div className="absolute inset-20 rounded-full border border-[#14263d]/10" />
+          <div className="absolute inset-40 rounded-full border border-[#ff5f49]/20" />
+
+          <span className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff5f49]" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-screen-2xl px-6 lg:px-12">
+          {/* Identificador superior */}
+          <div className="flex items-center justify-between border-b border-[#14263d]/20 pb-5">
+            <div className="flex items-center gap-4">
+              <span className="h-2 w-2 bg-[#ff5f49]" />
+
+              <span className="text-[9px] font-bold uppercase tracking-[0.34em] text-[#14263d]/50">
+                <T>Catálogo Oficial</T>
+              </span>
+            </div>
+
+            <span className="hidden font-mono text-[9px] uppercase tracking-[0.22em] text-[#14263d]/35 md:block">
+              Mapira / Route Directory
+            </span>
+          </div>
+
+          {/* Cabecera editorial */}
+          <section className="grid items-end gap-10 border-b border-[#14263d]/20 py-12 lg:grid-cols-[1fr_340px] lg:py-16">
+            <div>
+              <p className="mb-5 font-mono text-[9px] font-bold uppercase tracking-[0.27em] text-[#ff5f49]">
+                Atlas de experiencias
+              </p>
+
+              <h1 className="max-w-5xl text-5xl font-black uppercase leading-[0.84] tracking-[-0.06em] text-[#14263d] sm:text-6xl md:text-7xl lg:text-8xl">
+                <T>Encuentra tu</T>
+
+                <span className="mt-2 block text-[#ff5f49]">
+                  <T>horizonte.</T>
                 </span>
-              </div>
-              <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground mb-6 leading-[0.9]">
-                <T>Encuentra tu</T> <span className="font-light italic text-primary"><T>horizonte.</T></span>
               </h1>
             </div>
-          </div>
-        </section>
 
-        {/* Barra de Filtros Minimalista (Ya no es sticky, fluye con el contenido) */}
-        <section className="relative mb-16 border-y border-foreground/10 py-6">
-          <div className="container mx-auto px-6 lg:px-12 max-w-screen-xl flex flex-col lg:flex-row gap-6 items-center justify-between">
-            
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6 w-full lg:w-auto">
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className={`text-sm font-bold uppercase tracking-widest transition-all pb-1 border-b-2 ${!selectedCategory ? 'border-primary text-foreground' : 'border-transparent text-foreground/40 hover:text-foreground'}`}
-              >
-                <T>Ver Todo</T>
-              </button>
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.slug)}
-                  className={`text-sm font-bold uppercase tracking-widest transition-all pb-1 border-b-2 ${selectedCategory === cat.slug ? 'border-primary text-foreground' : 'border-transparent text-foreground/40 hover:text-foreground'}`}
-                >
-                  <T>{cat.name}</T>
-                </button>
-              ))}
+            <div className="border-l-2 border-[#ff5f49] pl-5">
+              <p className="text-sm font-medium leading-relaxed text-[#14263d]/60 md:text-base">
+                Explora nuestra selección de rutas, experiencias y planes
+                diseñados para descubrir nuevas coordenadas.
+              </p>
+
+              <div className="mt-6 flex items-center justify-between border-t border-[#14263d]/15 pt-4">
+                <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#14263d]/35">
+                  Rutas disponibles
+                </span>
+
+                <span className="font-mono text-[9px] font-bold text-[#ff5f49]">
+                  {String(experiences.length).padStart(2, "0")}
+                </span>
+              </div>
+            </div>
+          </section>
+
+          {/* Filtros */}
+          <section className="border-x border-b border-[#14263d]/20 bg-[#f4f0e7]">
+            <div className="grid lg:grid-cols-[1fr_360px]">
+              {/* Categorías */}
+              <div className="border-b border-[#14263d]/20 lg:border-b-0 lg:border-r">
+                <div className="flex items-center justify-between border-b border-[#14263d]/15 bg-[#e8e1d4] px-5 py-4">
+                  <span className="text-[8px] font-bold uppercase tracking-[0.28em] text-[#14263d]/40">
+                    Clasificación de rutas
+                  </span>
+
+                  <span className="font-mono text-[8px] text-[#14263d]/30">
+                    FILTER—01
+                  </span>
+                </div>
+
+                <div className="flex overflow-x-auto">
+                  <button
+                    onClick={() => setSelectedCategory(null)}
+                    className={`relative min-w-fit border-r border-[#14263d]/15 px-5 py-5 text-[9px] font-bold uppercase tracking-[0.22em] transition-all duration-300 ${
+                      !selectedCategory
+                        ? "bg-[#14263d] text-white"
+                        : "text-[#14263d]/45 hover:bg-[#e8e1d4] hover:text-[#14263d]"
+                    }`}
+                  >
+                    <T>Ver Todo</T>
+
+                    {!selectedCategory && (
+                      <span className="absolute bottom-0 left-0 h-[3px] w-full bg-[#ff5f49]" />
+                    )}
+                  </button>
+
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.slug)}
+                      className={`relative min-w-fit border-r border-[#14263d]/15 px-5 py-5 text-[9px] font-bold uppercase tracking-[0.22em] transition-all duration-300 last:border-r-0 ${
+                        selectedCategory === cat.slug
+                          ? "bg-[#14263d] text-white"
+                          : "text-[#14263d]/45 hover:bg-[#e8e1d4] hover:text-[#14263d]"
+                      }`}
+                    >
+                      <T>{cat.name}</T>
+
+                      {selectedCategory === cat.slug && (
+                        <span className="absolute bottom-0 left-0 h-[3px] w-full bg-[#ff5f49]" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Buscador */}
+              <div>
+                <div className="flex items-center justify-between border-b border-[#14263d]/15 bg-[#e8e1d4] px-5 py-4">
+                  <span className="text-[8px] font-bold uppercase tracking-[0.28em] text-[#14263d]/40">
+                    Búsqueda
+                  </span>
+
+                  <span className="font-mono text-[8px] text-[#14263d]/30">
+                    SEARCH—02
+                  </span>
+                </div>
+
+                <div className="relative px-5 py-3">
+                  <Search
+                    className="absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#ff5f49]"
+                    strokeWidth={1.6}
+                  />
+
+                  <Input
+                    placeholder={phSearch}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="h-12 rounded-none border-0 bg-transparent pl-8 pr-0 text-sm font-semibold text-[#14263d] shadow-none placeholder:text-[#14263d]/30 focus-visible:ring-0"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Resultados */}
+          <section className="pb-32 pt-12">
+            <div className="mb-6 flex items-center justify-between border-b border-[#14263d]/20 pb-4">
+              <span className="text-[8px] font-bold uppercase tracking-[0.28em] text-[#14263d]/40">
+                Directorio de experiencias
+              </span>
+
+              <span className="font-mono text-[9px] text-[#ff5f49]">
+                {String(filteredExperiences.length).padStart(2, "0")} RESULTS
+              </span>
             </div>
 
-            <div className="relative w-full lg:w-80">
-              <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
-              <Input
-                placeholder={phSearch}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-8 h-10 border-0 border-b-2 border-foreground/10 focus-visible:ring-0 focus-visible:border-primary rounded-none bg-transparent font-medium text-foreground placeholder:text-foreground/30"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Grid de Experiencias Estilo Revista */}
-        <section className="pb-32">
-          <div className="container mx-auto px-6 lg:px-12 max-w-screen-xl">
             {filteredExperiences.length === 0 ? (
-              <div className="text-center py-32 border border-foreground/10 rounded-3xl">
-                <Compass className="w-12 h-12 text-foreground/20 mx-auto mb-6" />
-                <h3 className="text-2xl font-black text-foreground mb-2"><T>Ruta no encontrada</T></h3>
-                <p className="text-muted-foreground font-medium"><T>Intenta ajustando los filtros o tu búsqueda.</T></p>
+              <div className="grid min-h-[420px] border border-[#14263d]/20 bg-[#f4f0e7] md:grid-cols-[0.65fr_1.35fr]">
+                <div className="relative flex min-h-[240px] items-center justify-center overflow-hidden bg-[#14263d]">
+                  <div className="pointer-events-none absolute h-64 w-64 rounded-full border border-white/10">
+                    <div className="absolute inset-12 rounded-full border border-white/10" />
+                    <div className="absolute inset-24 rounded-full border border-[#ff5f49]/30" />
+                  </div>
+
+                  <Compass
+                    className="relative z-10 h-12 w-12 text-[#ff705d]"
+                    strokeWidth={1.2}
+                  />
+                </div>
+
+                <div className="flex flex-col justify-center px-7 py-12 sm:px-12">
+                  <p className="mb-4 font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-[#ff5f49]">
+                    Search / No Results
+                  </p>
+
+                  <h3 className="text-3xl font-black uppercase tracking-[-0.03em] text-[#14263d] md:text-4xl">
+                    <T>Ruta no encontrada</T>
+                  </h3>
+
+                  <p className="mt-5 max-w-lg text-sm font-medium leading-relaxed text-[#14263d]/55 md:text-base">
+                    <T>
+                      Intenta ajustando los filtros o tu búsqueda.
+                    </T>
+                  </p>
+                </div>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                {filteredExperiences.map((exp) => {
-                  const thumbImage = exp.images?.length > 0 ? exp.images[0] : '/placeholder.jpg';
+              <div className="grid border-l border-t border-[#14263d]/20 md:grid-cols-2 xl:grid-cols-3">
+                {filteredExperiences.map((exp, index) => {
+                  const thumbImage =
+                    exp.images?.length > 0
+                      ? exp.images[0]
+                      : "/placeholder.jpg";
 
                   return (
-                    <Link key={exp.id} href={`/${locale}/experiencias/${exp.id}`} className="group block h-[450px] lg:h-[550px]">
-                      <Card className="h-full relative overflow-hidden border-none rounded-[2rem] shadow-none hover:shadow-2xl transition-all duration-500 bg-foreground">
-                        
-                        {/* Imagen Optimizada con Next.js Image */}
-                        <Image 
-                          src={thumbImage} 
-                          alt={exp.title} 
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover scale-100 group-hover:scale-105 transition-transform duration-700 opacity-90" 
-                        />
-                        
-                        {/* Gradiente de contraste */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 to-black/90 transition-opacity group-hover:opacity-100" />
+                    <Link
+                      key={exp.id}
+                      href={`/${locale}/experiencias/${exp.id}`}
+                      className="group block border-b border-r border-[#14263d]/20"
+                    >
+                      <Card className="h-full overflow-hidden rounded-none border-0 bg-[#f4f0e7] shadow-none">
+                        {/* Cabecera de ficha */}
+                        <div className="flex items-center justify-between border-b border-[#14263d]/15 px-5 py-4">
+                          <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-[#ff5f49]">
+                            <T>{exp.plan_type}</T>
+                          </span>
 
-                        <div className="absolute inset-0 p-8 flex flex-col justify-between">
-                          <div className="flex justify-between items-start">
-                            <span className="bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-4 py-2 rounded-full uppercase tracking-widest border border-white/20">
-                              <T>{exp.plan_type}</T>
+                          <span className="font-mono text-[9px] text-[#14263d]/30">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                        </div>
+
+                        {/* Imagen */}
+                        <div className="relative aspect-[4/5] overflow-hidden bg-[#d7cfc1]">
+                          <Image
+                            src={thumbImage}
+                            alt={exp.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                            className="object-cover grayscale-[12%] transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                          />
+
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#14263d]/70 via-transparent to-[#14263d]/10" />
+
+                          <div className="absolute left-5 top-5 flex items-center gap-3">
+                            <span className="h-2 w-2 rounded-full bg-[#ff5f49] shadow-[0_0_0_6px_rgba(255,95,73,0.18)]" />
+
+                            <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-white/75">
+                              Selected Route
                             </span>
-                            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <ArrowRight className="w-4 h-4 text-white" />
-                            </div>
                           </div>
-                          
-                          <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 relative z-10">
-                            <div className="flex items-center gap-1 text-[10px] font-bold text-primary mb-2 uppercase tracking-widest">
-                              <MapPin className="w-3 h-3" /> <T>{exp.destination}</T>
+
+                          <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-5">
+                            <div className="min-w-0">
+                              <p className="mb-2 flex items-center gap-2 text-[8px] font-bold uppercase tracking-[0.2em] text-[#ff8a77]">
+                                <MapPin
+                                  className="h-3 w-3"
+                                  strokeWidth={1.8}
+                                />
+
+                                <T>{exp.destination}</T>
+                              </p>
+
+                              <h3 className="text-2xl font-black uppercase leading-[0.95] tracking-[-0.025em] text-white md:text-3xl">
+                                <T>{exp.title}</T>
+                              </h3>
                             </div>
-                            <h3 className="text-2xl lg:text-3xl font-black tracking-tight text-white mb-4"><T>{exp.title}</T></h3>
-                            <div className="flex items-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 h-0 group-hover:h-auto overflow-hidden">
-                              <span className="text-2xl font-black text-white">{formatPrice(exp.price)}</span>
-                              <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1.5"><T>por persona. IVA Incluido</T></span>
+
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/30 bg-[#14263d]/35 text-white backdrop-blur-md transition-all duration-300 group-hover:border-[#ff5f49] group-hover:bg-[#ff5f49]">
+                              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                             </div>
                           </div>
                         </div>
 
+                        {/* Información inferior */}
+                        <div className="bg-[#f4f0e7] px-5 py-6 transition-colors duration-300 group-hover:bg-[#e8e1d4]">
+                          <div className="flex items-end justify-between gap-5">
+                            <div>
+                              <p className="mb-2 text-[7px] font-bold uppercase tracking-[0.22em] text-[#14263d]/35">
+                                Inversión individual
+                              </p>
+
+                              <span className="text-lg font-black tracking-[-0.025em] text-[#14263d]">
+                                {formatPrice(exp.price)}
+                              </span>
+                            </div>
+
+                            <span className="max-w-[100px] text-right text-[7px] font-bold uppercase leading-relaxed tracking-[0.17em] text-[#14263d]/35">
+                              <T>por persona. IVA Incluido</T>
+                            </span>
+                          </div>
+
+                          <div className="mt-6 flex items-center gap-3 border-t border-[#14263d]/15 pt-4">
+                            <span className="h-px w-8 bg-[#ff5f49] transition-all duration-300 group-hover:w-14" />
+
+                            <span className="text-[7px] font-bold uppercase tracking-[0.22em] text-[#14263d]/35">
+                              Consultar experiencia
+                            </span>
+                          </div>
+                        </div>
                       </Card>
                     </Link>
                   );
                 })}
               </div>
             )}
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
+
       <Footer />
     </div>
   );
@@ -218,11 +452,17 @@ function ExperienciasContent() {
 
 export default function ExperienciasPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="w-12 h-12 animate-spin text-primary" />
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-[#eee8dc]">
+          <div className="relative flex h-24 w-24 items-center justify-center border border-[#14263d]/20">
+            <div className="absolute inset-3 border border-[#14263d]/10" />
+
+            <Loader2 className="relative z-10 h-8 w-8 animate-spin text-[#ff5f49]" />
+          </div>
+        </div>
+      }
+    >
       <ExperienciasContent />
     </Suspense>
   );
