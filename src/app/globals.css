@@ -1,0 +1,101 @@
+/* globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,300..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* HorizonTrip Palette: Selva & Playa */
+    --background: 43 33% 96%; /* Sand / Blanco Arena Cálido */
+    --foreground: 152 65% 10%; /* Deep Jungle / Verde oscuro muy elegante */
+    --card: 0 0% 100%; 
+    --card-foreground: 152 65% 10%;
+    --popover: 43 33% 96%;
+    --popover-foreground: 152 65% 10%;
+    
+    /* Emerald/Turquoise - Color de acción principal */
+    --primary: 173 80% 36%; 
+    --primary-foreground: 0 0% 100%;
+    
+    /* Warm Sun / Dorado - Para acentos secundarios */
+    --secondary: 35 92% 55%; 
+    --secondary-foreground: 152 65% 10%;
+    
+    --muted: 150 10% 90%;
+    --muted-foreground: 152 20% 40%; /* Verde grisáceo para textos secundarios */
+    
+    --accent: 173 80% 36%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 43 33% 96%;
+    
+    --border: 150 15% 85%;
+    --input: 150 15% 85%;
+    --ring: 173 80% 36%;
+
+    /* Bordes más sutiles para un look orgánico */
+    --radius: 0.75rem; 
+  }
+
+  .dark {
+    /* Mantenemos una versión oscura pero basada en tonos bosque profundo */
+    --background: 152 65% 10%;
+    --foreground: 43 33% 96%;
+    --card: 152 60% 14%;
+    --card-foreground: 43 33% 96%;
+    --primary: 173 80% 45%;
+    --primary-foreground: 152 65% 10%;
+    --secondary: 35 92% 60%;
+    --secondary-foreground: 152 65% 10%;
+    --muted: 152 40% 20%;
+    --muted-foreground: 150 20% 70%;
+    --border: 152 40% 20%;
+    --input: 152 40% 20%;
+    --ring: 173 80% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Archivo', sans-serif;
+    @apply tracking-tighter;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-sm;
+  }
+  .dark .glass-panel {
+    @apply bg-foreground/50 border-white/10 shadow-xl;
+  }
+  
+  .text-gradient-earth {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+  }
+
+  .animate-reveal {
+    animation: reveal 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+}
+
+@keyframes reveal {
+  from { opacity: 0; clip-path: inset(100% 0 0 0); transform: translateY(20px); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+
+/* Scrollbar Orgánico */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary)); }
