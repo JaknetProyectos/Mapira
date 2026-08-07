@@ -4,33 +4,33 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- =====================================================================================
 -- 1. LIMPIEZA PREVIA 
 -- =====================================================================================
-DROP TABLE IF EXISTS public.booking_items_horizon CASCADE;
-DROP TABLE IF EXISTS public.cart_items_horizon CASCADE;
-DROP TABLE IF EXISTS public.bookings_horizon CASCADE;
-DROP TABLE IF EXISTS public.activity_packages_horizon CASCADE;
-DROP TABLE IF EXISTS public.activities_horizon CASCADE;
-DROP TABLE IF EXISTS public.categories_horizon CASCADE;
-DROP TABLE IF EXISTS public.customers_horizon CASCADE;
-DROP TABLE IF EXISTS public.contact_messages_horizon CASCADE;
-DROP TABLE IF EXISTS public.custom_quotes_horizon CASCADE;
-DROP TABLE IF EXISTS public.fifa_experiences_horizon CASCADE;
+DROP TABLE IF EXISTS public.booking_items_mp CASCADE;
+DROP TABLE IF EXISTS public.cart_items_mp CASCADE;
+DROP TABLE IF EXISTS public.bookings_mp CASCADE;
+DROP TABLE IF EXISTS public.activity_packages_mp CASCADE;
+DROP TABLE IF EXISTS public.activities_mp CASCADE;
+DROP TABLE IF EXISTS public.categories_mp CASCADE;
+DROP TABLE IF EXISTS public.customers_mp CASCADE;
+DROP TABLE IF EXISTS public.contact_messages_mp CASCADE;
+DROP TABLE IF EXISTS public.custom_quotes_mp CASCADE;
+DROP TABLE IF EXISTS public.fifa_experiences_mp CASCADE;
 
 -- =====================================================================================
 -- 2. CREACIÓN DE TABLAS REDEFINIDAS
 -- =====================================================================================
 
-CREATE TABLE public.categories_horizon (
+CREATE TABLE public.categories_mp (
   id SERIAL PRIMARY KEY,
   name VARCHAR NOT NULL,
   slug VARCHAR NOT NULL UNIQUE
 );
 
 -- Nueva estructura basada en tu JSON de Rutas y Experiencias
-CREATE TABLE public.activities_horizon (
+CREATE TABLE public.activities_mp (
   id SERIAL PRIMARY KEY,
-  slug VARCHAR NOT NULL UNIQUE, -- Mapeado del 'id' del JSON
+  slug VARCHAR NOT NULL UNIQUE, 
   title VARCHAR NOT NULL,
-  plan_type VARCHAR NOT NULL, -- Ej: PLAN, EXPERIENCIA, PERSONALIZADA
+  plan_type VARCHAR NOT NULL, 
   destination VARCHAR NOT NULL,
   price NUMERIC NOT NULL,
   currency VARCHAR DEFAULT 'MXN',
@@ -39,12 +39,12 @@ CREATE TABLE public.activities_horizon (
   suggested_route JSONB DEFAULT '[]'::jsonb, -- Array de rutas
   included JSONB DEFAULT '[]'::jsonb, -- Array de que_incluye
   logistics JSONB DEFAULT '{}'::jsonb, -- Objeto logistica_y_disponibilidad
-  category_id INTEGER REFERENCES public.categories_horizon(id),
+  category_id INTEGER REFERENCES public.categories_mp(id),
   images JSONB DEFAULT '[]'::jsonb, -- Para el UI del Frontend
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE public.customers_horizon (
+CREATE TABLE public.customers_mp (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   first_name VARCHAR NOT NULL,
   last_name VARCHAR NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE public.customers_horizon (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE public.custom_quotes_horizon (
+CREATE TABLE public.custom_quotes_mp (
   id SERIAL PRIMARY KEY,
   customer_name VARCHAR NOT NULL,
   customer_email VARCHAR NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE public.custom_quotes_horizon (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE public.contact_messages_horizon (
+CREATE TABLE public.contact_messages_mp (
   id SERIAL PRIMARY KEY,
   full_name VARCHAR,
   phone VARCHAR,
@@ -76,19 +76,19 @@ CREATE TABLE public.contact_messages_horizon (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE public.cart_items_horizon (
+CREATE TABLE public.cart_items_mp (
   id SERIAL PRIMARY KEY,
   session_id VARCHAR NOT NULL,
-  activity_id INTEGER REFERENCES public.activities_horizon(id),
+  activity_id INTEGER REFERENCES public.activities_mp(id),
   scheduled_date DATE NOT NULL,
   scheduled_time TIME,
   pax_qty INTEGER DEFAULT 1,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE public.bookings_horizon (
+CREATE TABLE public.bookings_mp (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  customer_id UUID REFERENCES public.customers_horizon(id),
+  customer_id UUID REFERENCES public.customers_mp(id),
   session_id VARCHAR, 
   total_amount NUMERIC NOT NULL,
   payment_status VARCHAR DEFAULT 'pending',
@@ -104,10 +104,10 @@ CREATE TABLE public.bookings_horizon (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE public.booking_items_horizon (
+CREATE TABLE public.booking_items_mp (
   id SERIAL PRIMARY KEY,
-  booking_id UUID REFERENCES public.bookings_horizon(id),
-  activity_id INTEGER REFERENCES public.activities_horizon(id),
+  booking_id UUID REFERENCES public.bookings_mp(id),
+  activity_id INTEGER REFERENCES public.activities_mp(id),
   scheduled_date DATE NOT NULL,
   scheduled_time TIME,
   pax_qty INTEGER DEFAULT 1,
@@ -115,7 +115,7 @@ CREATE TABLE public.booking_items_horizon (
   custom_destination VARCHAR
 );
 
-CREATE TABLE public.fifa_experiences_horizon (
+CREATE TABLE public.fifa_experiences_mp (
   id SERIAL PRIMARY KEY,
   title VARCHAR NOT NULL,
   subtitle VARCHAR,
@@ -128,26 +128,26 @@ CREATE TABLE public.fifa_experiences_horizon (
 -- =====================================================================================
 -- 3. POLÍTICAS DE SEGURIDAD RLS
 -- =====================================================================================
-ALTER TABLE public.categories_horizon ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.activities_horizon ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.fifa_experiences_horizon ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.customers_horizon ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.bookings_horizon ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.booking_items_horizon ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.custom_quotes_horizon ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.categories_mp ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.activities_mp ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.fifa_experiences_mp ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.customers_mp ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.bookings_mp ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.booking_items_mp ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.custom_quotes_mp ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Lectura pública catálogos" ON public.categories_horizon FOR SELECT USING (true);
-CREATE POLICY "Lectura pública actividades" ON public.activities_horizon FOR SELECT USING (true);
-CREATE POLICY "Lectura pública fifa" ON public.fifa_experiences_horizon FOR SELECT USING (true);
-CREATE POLICY "Acceso total a clientes en checkout" ON public.customers_horizon FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Acceso total a reservas en checkout" ON public.bookings_horizon FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Acceso total a items de reserva" ON public.booking_items_horizon FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Permitir inserción anónima cotizaciones" ON public.custom_quotes_horizon FOR INSERT WITH CHECK (true);
+CREATE POLICY "Lectura pública catálogos" ON public.categories_mp FOR SELECT USING (true);
+CREATE POLICY "Lectura pública actividades" ON public.activities_mp FOR SELECT USING (true);
+CREATE POLICY "Lectura pública fifa" ON public.fifa_experiences_mp FOR SELECT USING (true);
+CREATE POLICY "Acceso total a clientes en checkout" ON public.customers_mp FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Acceso total a reservas en checkout" ON public.bookings_mp FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Acceso total a items de reserva" ON public.booking_items_mp FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Permitir inserción anónima cotizaciones" ON public.custom_quotes_mp FOR INSERT WITH CHECK (true);
 
 -- =====================================================================================
 -- 4. INSERTAR CATEGORÍAS BASE
 -- =====================================================================================
-INSERT INTO public.categories_horizon (name, slug) VALUES 
+INSERT INTO public.categories_mp (name, slug) VALUES 
 ('Planes', 'plan'),
 ('Experiencias', 'experiencia'),
 ('Rutas Personalizadas', 'personalizada');
@@ -156,7 +156,7 @@ INSERT INTO public.categories_horizon (name, slug) VALUES
 -- 5. MIGRACIÓN DEL CONTENIDO JSON
 -- =====================================================================================
 
-INSERT INTO public.activities_horizon (slug, title, plan_type, destination, price, currency, tax_included, description, suggested_route, included, logistics, category_id, images) VALUES
+INSERT INTO public.activities_mp (slug, title, plan_type, destination, price, currency, tax_included, description, suggested_route, included, logistics, category_id, images) VALUES
 
 -- BLOQUE 1: CIUDAD DE MÉXICO Y CENTRO
 ('street-bites-centro-historico', 'Street Bites Centro Histórico', 'PLAN', 'Ciudad de México', 590.00, 'MXN', true, 'Explora la esencia de la comida callejera en el corazón de la ciudad mediante un recorrido por zonas icónicas del Centro Histórico, donde se concentran algunos de los sabores más tradicionales de México.', 
@@ -366,7 +366,7 @@ INSERT INTO public.activities_horizon (slug, title, plan_type, destination, pric
 -- =====================================================================================
 -- INSERTAR DETALLES MUNDIAL (FIFA)
 -- =====================================================================================
-INSERT INTO public.fifa_experiences_horizon (title, subtitle, description, items, image_url, order_index) VALUES
+INSERT INTO public.fifa_experiences_mp (title, subtitle, description, items, image_url, order_index) VALUES
 
 ('Estadios y Museos', 'Recorridos Históricos', 'Visitas guiadas a los templos del fútbol y acceso a zonas restringidas.', 
 '["Visitas guiadas a estadios FIFA y campos históricos", "Acceso a vestidores y zonas VIP (fotos y experiencias interactivas)", "Recorridos por museos de fútbol y exhibiciones temáticas"]'::jsonb, 

@@ -46,8 +46,8 @@ export default function ExperienceDetailPage() {
 
       try {
         const { data: activity } = await supabase
-          .from("activities_horizon")
-          .select("*, categories:categories_horizon(name, slug)")
+          .from("activities_mp")
+          .select("*, categories:categories_mp(name, slug)")
           .eq("id", params.id)
           .single();
 

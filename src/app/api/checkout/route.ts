@@ -132,7 +132,7 @@ export async function POST(req: Request) {
 
     // 5. GUARDAR EN SUPABASE
     const { data: customer, error: custError } = await supabase
-      .from('customers_horizon')
+      .from('customers_mp')
       .upsert({ 
         first_name: contactInfo.firstName, 
         last_name: contactInfo.lastName, 
@@ -144,7 +144,7 @@ export async function POST(req: Request) {
     if (custError) throw new Error("Error guardando cliente en la base de datos.");
 
     const { data: booking, error: bookError } = await supabase
-      .from('bookings_horizon')
+      .from('bookings_mp')
       .insert({
         customer_id: customer.id,
         session_id: manualFolioData ? manualFolioData.folio : null,
@@ -177,7 +177,7 @@ export async function POST(req: Request) {
 
         }));
       if (validBookingItems.length > 0) {
-        const { error: itemsError } = await supabase.from('booking_items_horizon').insert(validBookingItems);
+        const { error: itemsError } = await supabase.from('booking_items_mp').insert(validBookingItems);
         if (itemsError) throw new Error("Error guardando items de reserva en la BD.");
       }  
     }

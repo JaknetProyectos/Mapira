@@ -47,7 +47,7 @@ function ExperienciasContent() {
 
       try {
         const { data: catData } = await supabase
-          .from("categories_horizon")
+          .from("categories_mp")
           .select("*");
 
         if (catData) {
@@ -55,10 +55,10 @@ function ExperienciasContent() {
         }
 
         const { data: actData, error: actError } = await supabase
-          .from("activities_horizon")
+          .from("activities_mp")
           .select(`
             id, title, slug, plan_type, destination, price, description, images, category_id,
-            categories:categories_horizon (id, name, slug)
+            categories:categories_mp (id, name, slug)
           `);
 
         if (actError) {

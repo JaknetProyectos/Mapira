@@ -26,7 +26,7 @@ export function Contact() {
 
     try {
       const { error: dbError } = await supabase
-        .from("contact_messages_horizon")
+        .from("contact_messages_mp")
         .insert([
           {
             full_name: formData.name,

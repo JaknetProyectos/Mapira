@@ -79,7 +79,7 @@ export default function CotizarPage() {
         `${formData.firstName} ${formData.lastName}`.trim();
 
       const { error: dbError } = await supabase
-        .from("custom_quotes_horizon")
+        .from("custom_quotes_mp")
         .insert([
           {
             customer_name: customer_name,

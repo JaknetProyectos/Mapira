@@ -16,9 +16,9 @@ export function FifaSection() {
 
   useEffect(() => {
     async function loadFifaData() {
-      // CAMBIO CLAVE: Apuntamos a la nueva tabla terminada en _horizon
+      // CAMBIO CLAVE: Apuntamos a la nueva tabla terminada en _mp
       const { data, error } = await supabase
-        .from("fifa_experiences_horizon")
+        .from("fifa_experiences_mp")
         .select("*")
         .order("order_index", { ascending: true });
 
