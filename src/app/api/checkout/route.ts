@@ -7,31 +7,30 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!; 
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-// --- CREDENCIALES ETOMIN ---
-const ETOMIN_EMAIL = process.env.ETOMIN_EMAIL!;
-const ETOMIN_PASSWORD = process.env.ETOMIN_PASSWORD!;
-const ETOMIN_BASE_URL = 'https://pagos.etomin.com/api/v1';
+// --- CREDENCIALES OCTANO ---
+const OCTANO_EMAIL = process.env.OCTANO_EMAIL!;
+const OCTANO_PASSWORD = process.env.OCTANO_PASSWORD!;
+const OCTANO_BASE_URL = 'https://pagos.octanopayments.com/api/v1';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const formatPrice = (price: number) => new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(price);
 
-const getEtominHeaders = (extraHeaders = {}) => ({
-  'Content-Type': 'application/json',
+const getOctanoHeaders = (extraHeaders = {}) => ({
   'Accept': 'application/json',
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
   'Origin': 'https://horizontrip.com.mx', 
   ...extraHeaders
 });
 
-async function safeEtominFetch(url: string, options: RequestInit, stepName: string) {
+async function safeOctanoFetch(url: string, options: RequestInit, stepName: string) {
   const res = await fetch(url, options);
   const text = await res.text(); 
   
   try {
     return JSON.parse(text);
   } catch (e) {
-    console.error(`Respuesta cruda de Etomin en [${stepName}]:`, text);
-    throw new Error(`Falla en ${stepName}. Etomin respondió: ${text.slice(0, 50)}...`);
+    console.error(`Respuesta cruda de Octano en [${stepName}]:`, text);
+    throw new Error(`Falla en ${stepName}. Octano respondió: ${text.slice(0, 50)}...`);
   }
 }
 
@@ -42,41 +41,45 @@ export async function POST(req: Request) {
 
     const tempReferenceId = `REF-${Date.now()}`;
 
-    // 1. SIGNIN EN ETOMIN
-    const signinData = await safeEtominFetch(`${ETOMIN_BASE_URL}/signin`, {
+    // 1. SIGNIN EN OCTANO
+    // Nota: Octano requiere x-www-form-urlencoded para el inicio de sesión
+    const signinData = await safeOctanoFetch(`${OCTANO_BASE_URL}/signin`, {
       method: 'POST',
-      headers: getEtominHeaders(),
-      body: JSON.stringify({ email: ETOMIN_EMAIL, password: ETOMIN_PASSWORD })
-    }, 'Login Etomin');
+      headers: getOctanoHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+      body: new URLSearchParams({ email: OCTANO_EMAIL, password: OCTANO_PASSWORD }).toString()
+    }, 'Login Octano');
     
     if (!signinData.authToken) {
-      throw new Error("Credenciales de Etomin incorrectas o bloqueadas.");
+      throw new Error("Credenciales de Octano incorrectas o bloqueadas.");
     }
     const authToken = signinData.authToken;
 
-    // 2. TOKENIZACIÓN DE TARJETA ETOMIN
+    // 2. TOKENIZACIÓN DE TARJETA OCTANO
     const cardPayload = {
       cardData: {
-        cardNumber: cardInfo.number,
+        cardNumber: cardInfo.number.replace(/\s/g, ''), // Octano prefiere el número sin espacios
         cardholderName: cardInfo.name,
-        expirationMonth: cardInfo.expiry.split('/')[0],
-        expirationYear: cardInfo.expiry.split('/')[1],
+        expirationMonth: cardInfo.expiry.split('/')[0].trim(),
+        expirationYear: cardInfo.expiry.split('/')[1].trim(),
       }
     };
 
-    const tokenData = await safeEtominFetch(`${ETOMIN_BASE_URL}/card/tokenizer`, {
+    const tokenData = await safeOctanoFetch(`${OCTANO_BASE_URL}/card/tokenizer`, {
       method: 'POST',
-      headers: getEtominHeaders({ 'Authorization': `Bearer ${authToken}` }),
+      headers: getOctanoHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}` 
+      }),
       body: JSON.stringify(cardPayload)
     }, 'Tokenización de Tarjeta');
 
     if (!tokenData.cardNumberToken) {
-      throw new Error("Tarjeta rechazada por Etomin (Datos inválidos o encriptación fallida).");
+      throw new Error("Tarjeta rechazada por Octano (Datos inválidos o encriptación fallida).");
     }
     const cardToken = tokenData.cardNumberToken;
 
     // 3. PREPARAR ITEMS PARA LA VENTA
-    const etominItems = manualFolioData 
+    const octanoItems = manualFolioData 
       ? [{ title: `Pago Cotización: ${manualFolioData.folio}`, amount: manualFolioData.amount, quantity: 1, id: manualFolioData.folio }]
       : cart.items.map((item: CartItem) => ({
           title: item.experience.title,
@@ -90,7 +93,7 @@ export async function POST(req: Request) {
     // 4. PROCESAR LA VENTA
     const salePayload = {
       amount: Number(finalAmountToCharge.toFixed(2)),
-      currency: 484, // MXN
+      currency: 484, // MXN Obligatorio en Octano
       reference: tempReferenceId,
       customerInformation: {
         firstName: contactInfo.firstName,
@@ -107,20 +110,23 @@ export async function POST(req: Request) {
       },
       cardData: {
         cardNumberToken: cardToken,
-        cvv: cardInfo.cvv
+        cvv: cardInfo.cvv.replace(/\s/g, '')
       },
-      items: etominItems,
+      items: octanoItems,
       redirectUrl: 'https://horizontrip.com.mx' 
     };
 
-    const saleData = await safeEtominFetch(`${ETOMIN_BASE_URL}/sale`, {
+    const saleData = await safeOctanoFetch(`${OCTANO_BASE_URL}/sale`, {
       method: 'POST',
-      headers: getEtominHeaders({ 'Authorization': `Bearer ${authToken}` }),
+      headers: getOctanoHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}` 
+      }),
       body: JSON.stringify(salePayload)
     }, 'Procesar Venta');
     
     if (saleData.status !== 'APPROVED' && saleData.status !== 'PENDING') {
-      console.error("❌ DETALLE DEL RECHAZO ETOMIN:", saleData); 
+      console.error("❌ DETALLE DEL RECHAZO OCTANO:", saleData); 
       throw new Error(`Pago declinado: ${saleData.message || saleData.responseCode || 'Tarjeta rechazada por el banco'}`);
     }
 
@@ -145,7 +151,7 @@ export async function POST(req: Request) {
         total_amount: finalAmountToCharge,
         payment_status: 'paid',
         transaction_id: saleData.transactionId || saleData.authorizationNumber || tempReferenceId,
-        payment_provider: 'etomin', 
+        payment_provider: 'octano', // Actualizado a Octano
         payment_date: new Date().toISOString(),
         pais: billingInfo.pais,
         direccion: billingInfo.direccion,
@@ -268,11 +274,11 @@ export async function POST(req: Request) {
     
     const htmlInternal = `
       <div style="font-family: sans-serif; color: #333;">
-        <h2 style="color: #0f4c3a;">¡Nuevo Dossier Confirmado! (Vía Etomin)</h2>
+        <h2 style="color: #0f4c3a;">¡Nuevo Dossier Confirmado! (Vía Octano)</h2>
         <p>Se ha procesado un pago exitoso a través de la plataforma HorizonTrip.</p>
         <hr/>
         <p><strong>Valor de Inversión:</strong> ${formattedTotal}</p>
-        <p><strong>ID Transacción (Etomin):</strong> ${saleData.transactionId || saleData.authorizationNumber}</p>
+        <p><strong>ID Transacción (Octano):</strong> ${saleData.transactionId || saleData.authorizationNumber}</p>
         <hr/>
         <h3>Datos del Viajero:</h3>
         <p><strong>Nombre:</strong> ${contactInfo.firstName} ${contactInfo.lastName}</p>

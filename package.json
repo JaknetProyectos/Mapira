@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3041",
+    "dev": "next dev -p 3033",
     "build": "next build",
-    "start": "next start -p 3041",
+    "start": "next start -p 3033",
     "lint": "bunx tsc --noEmit && next lint",
     "format": "bunx biome format --write"
   },

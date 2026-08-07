@@ -520,7 +520,7 @@ function CheckoutContent() {
                 </div>
 
                 <img
-                  src="/etomin_logo.svg"
+                  src="/logo-octano-2"
                   alt="Powered by Etomin"
                   className="h-7 max-w-[100px] object-contain brightness-0 invert sm:max-w-none"
                 />
