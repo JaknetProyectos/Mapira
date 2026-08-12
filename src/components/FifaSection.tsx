@@ -123,11 +123,11 @@ export function FifaSection() {
 
             <div className="border-l-2 border-[#ff6550] pl-5">
               <p className="font-mono text-[9px] uppercase leading-relaxed tracking-[0.22em] text-white/45">
-                Accesos seleccionados
+                <T>Accesos seleccionados</T>
                 <br />
-                Hospitalidad premium
+                <T>Hospitalidad premium</T>
                 <br />
-                Experiencias oficiales
+                <T>Experiencias oficiales</T>
               </p>
             </div>
           </div>
@@ -140,7 +140,7 @@ export function FifaSection() {
               <div className="border-b border-white/20 px-5 py-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-white/40">
-                    Selecciona experiencia
+                    <T>Selecciona experiencia</T>
                   </span>
 
                   <span className="font-mono text-[9px] text-[#ff7d6b]">
@@ -193,7 +193,7 @@ export function FifaSection() {
                   <div className="mb-10 flex items-start justify-between gap-6">
                     <div>
                       <p className="mb-3 font-mono text-[8px] font-bold uppercase tracking-[0.3em] text-[#ff7d6b]">
-                        Experiencia seleccionada
+                        <T>Experiencia seleccionada</T>
                       </p>
 
                       <h3 className="max-w-2xl text-3xl font-black uppercase leading-[0.95] tracking-[-0.025em] text-white md:text-4xl">
@@ -213,11 +213,11 @@ export function FifaSection() {
                   <div className="mt-10 flex flex-col gap-5 border-t border-white/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                       <p className="mb-1 text-[7px] font-bold uppercase tracking-[0.3em] text-white/30">
-                        Solicitud personalizada
+                        <T>Solicitud personalizada</T>
                       </p>
 
                       <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/60">
-                        Acceso sujeto a disponibilidad
+                        <T>Acceso sujeto a disponibilidad</T>
                       </p>
                     </div>
 
@@ -238,7 +238,7 @@ export function FifaSection() {
                 <div className="bg-[#0c192a]/55">
                   <div className="flex items-center justify-between border-b border-white/15 px-6 py-5">
                     <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-white/35">
-                      Acceso incluido
+                      <T>Acceso incluido</T>
                     </span>
 
                     <span className="font-mono text-[9px] text-[#ff7d6b]">

@@ -105,8 +105,8 @@ export async function POST(req: Request) {
     // ==========================================
     if (type === 'CONTACT') {
       subjectClient = isEnglish
-        ? '[HorizonTrip] We received your message'
-        : '[HorizonTrip] Hemos recibido tu mensaje';
+        ? '[Mapira] We received your message'
+        : '[Mapira] Hemos recibido tu mensaje';
 
       subjectInternal = isEnglish
         ? `[NEW CONTACT MESSAGE] - ${safeName}`
@@ -138,7 +138,7 @@ export async function POST(req: Request) {
           </div>
 
           <div style="text-align: center; margin-top: 40px; font-family: Arial, sans-serif;">
-            <a href="https://horizontrip.com.mx/${isEnglish ? 'en' : 'es'}#experiencias" 
+            <a href="https://mapira.mx/${isEnglish ? 'en' : 'es'}#experiencias" 
               style="display: inline-block; background-color: ${primaryColor}; color: #ffffff; padding: 16px 32px; border-radius: 9999px; text-decoration: none; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">
               ${isEnglish ? 'Explore Experiences' : 'Explorar Experiencias'}
             </a>
@@ -156,8 +156,8 @@ export async function POST(req: Request) {
           <p style="font-size: 15px; line-height: 1.8; color: ${textBase}; font-family: Arial, sans-serif;">
             ${
               isEnglish
-                ? 'A new contact message was submitted from the HorizonTrip website.'
-                : 'Se recibió un nuevo mensaje desde el sitio web de HorizonTrip.'
+                ? 'A new contact message was submitted from the Mapira website.'
+                : 'Se recibió un nuevo mensaje desde el sitio web de Mapira.'
             }
           </p>
 
@@ -186,8 +186,8 @@ export async function POST(req: Request) {
     // ==========================================
     if (type === 'QUOTE') {
       subjectClient = isEnglish
-        ? `[HorizonTrip] We are designing your trip to ${safeDestination}`
-        : `[HorizonTrip] Estamos configurando tu viaje a ${safeDestination}`;
+        ? `[Mapira] We are designing your trip to ${safeDestination}`
+        : `[Mapira] Estamos configurando tu viaje a ${safeDestination}`;
 
       subjectInternal = isEnglish
         ? `[NEW QUOTE REQUEST] - ${safeDestination} - ${safeName}`
@@ -273,8 +273,8 @@ export async function POST(req: Request) {
           <p style="font-size: 15px; line-height: 1.8; color: ${textBase}; font-family: Arial, sans-serif;">
             ${
               isEnglish
-                ? 'A new custom trip quote request was submitted from the HorizonTrip website.'
-                : 'Se recibió una nueva solicitud de cotización personalizada desde el sitio web de HorizonTrip.'
+                ? 'A new custom trip quote request was submitted from the Mapira website.'
+                : 'Se recibió una nueva solicitud de cotización personalizada desde el sitio web de Mapira.'
             }
           </p>
 
@@ -304,7 +304,7 @@ export async function POST(req: Request) {
 
     // Enviar correo al cliente
     const { data, error } = await resend.emails.send({
-      from: 'HorizonTrip Concierge <hola@horizontrip.com.mx>',
+      from: 'Mapira Concierge <hola@mapira.mx>',
       to: [email],
       subject: subjectClient,
       html: htmlClient,
@@ -317,8 +317,8 @@ export async function POST(req: Request) {
 
     // Enviar correo interno
     const internalMail = await resend.emails.send({
-      from: 'Sistema HorizonTrip <hola@horizontrip.com.mx>',
-      to: ['hola@horizontrip.com.mx'],
+      from: 'Sistema Mapira <hola@mapira.mx>',
+      to: ['hola@mapira.mx'],
       subject: subjectInternal,
       html: htmlInternal,
     });

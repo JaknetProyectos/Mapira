@@ -384,15 +384,6 @@ export default function ExperienceDetailPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between border-t border-[#14263d]/15 bg-[#e8e1d4] px-5 py-4">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#14263d]/35">
-                    Route documentation
-                  </span>
-
-                  <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#ff5f49]">
-                    Image 01
-                  </span>
-                </div>
               </section>
 
               {/* Widget móvil */}

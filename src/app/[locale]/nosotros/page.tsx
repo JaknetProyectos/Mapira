@@ -49,7 +49,7 @@ export default function SobreNosotrosPage() {
               </div>
 
               <span className="hidden font-mono text-[9px] uppercase tracking-[0.22em] text-[#14263d]/35 md:block">
-                Mapira / Field Journal / 01
+                Mapira / <T>Bitácora de Viaje</T> / 01
               </span>
             </div>
 
@@ -64,7 +64,7 @@ export default function SobreNosotrosPage() {
                     />
 
                     <span className="font-mono text-[8px] uppercase tracking-[0.26em] text-[#14263d]/40">
-                      Independent travel studio
+                      <T>Estudio de Viajes Independiente</T>
                     </span>
                   </div>
 
@@ -150,7 +150,7 @@ export default function SobreNosotrosPage() {
 
                 <div className="absolute left-0 top-0 bg-[#ff5f49] px-5 py-4">
                   <span className="font-mono text-[8px] font-bold uppercase tracking-[0.24em] text-white">
-                    Mapira Archive 001
+                    Mapira <T>Archivo</T> 001
                   </span>
                 </div>
 
@@ -203,7 +203,7 @@ export default function SobreNosotrosPage() {
             <div className="mb-14 grid items-end gap-10 border-b border-white/20 pb-10 lg:grid-cols-[1fr_360px] lg:mb-20">
               <div>
                 <p className="mb-5 font-mono text-[8px] font-bold uppercase tracking-[0.3em] text-[#ff7561]">
-                  Design Principles / 03
+                  <T>Principios de Diseño </T>/ 03
                 </p>
 
                 <h2 className="max-w-4xl text-4xl font-black uppercase leading-[0.88] tracking-[-0.045em] text-white sm:text-5xl md:text-6xl lg:text-7xl">
@@ -267,7 +267,7 @@ export default function SobreNosotrosPage() {
                     <span className="h-px w-8 bg-[#ff5f49] transition-all duration-300 group-hover:w-14" />
 
                     <span className="text-[7px] font-bold uppercase tracking-[0.22em] text-white/30">
-                      Mapira principle
+                      <T>Principio</T> Mapira 
                     </span>
                   </div>
                 </article>
@@ -296,7 +296,7 @@ export default function SobreNosotrosPage() {
                     />
 
                     <span className="text-[8px] font-bold uppercase tracking-[0.28em] text-[#14263d]/45">
-                      Full Journey Design
+                      <T>Bitácora de Experiencias</T>
                     </span>
                   </div>
 
@@ -374,18 +374,18 @@ export default function SobreNosotrosPage() {
 
                   <div className="absolute left-5 top-5 border border-white/30 bg-[#14263d]/35 px-4 py-3 backdrop-blur-md">
                     <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-white/75">
-                      Visual Archive / MX
+                      <T>Archivo Visual</T> / MX
                     </span>
                   </div>
 
                   <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
                     <div>
                       <p className="mb-2 text-[8px] font-bold uppercase tracking-[0.25em] text-[#ff806d]">
-                        Destination study
+                        <T>Conoce tu destino</T>
                       </p>
 
                       <p className="text-2xl font-black uppercase tracking-[-0.025em] text-white">
-                        Hospitality Selection
+                        <T>Selección de experiencias</T>
                       </p>
                     </div>
 
@@ -467,7 +467,7 @@ export default function SobreNosotrosPage() {
                         />
 
                         <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/30">
-                          Selected territories
+                          <T>Destinos seleccionados</T>
                         </span>
                       </div>
                     </div>
@@ -555,7 +555,7 @@ export default function SobreNosotrosPage() {
                     <span className="h-px w-8 bg-[#ff5f49] transition-all duration-300 group-hover:w-14" />
 
                     <span className="text-[7px] font-bold uppercase tracking-[0.22em] text-[#14263d]/30 transition-colors group-hover:text-white/30">
-                      Process stage
+                      <T>Etapa del proceso</T>
                     </span>
                   </div>
                 </article>
@@ -566,11 +566,11 @@ export default function SobreNosotrosPage() {
             <div className="mt-14 flex flex-col gap-6 border border-[#14263d]/20 bg-[#14263d] px-6 py-7 text-white sm:flex-row sm:items-center sm:justify-between sm:px-8">
               <div>
                 <p className="mb-2 font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-[#ff7561]">
-                  Start your route
+                  <T>Inicia tu viaje</T>
                 </p>
 
                 <p className="text-sm font-semibold text-white/65">
-                  Comparte tus primeras coordenadas con nuestro equipo.
+                  <T>Comparte tus primeras coordenadas con nuestro equipo.</T>
                 </p>
               </div>
 

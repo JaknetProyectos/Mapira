@@ -116,12 +116,8 @@ export function Hero() {
             <div className="border border-white/25 bg-[#14263d]/55 p-5 backdrop-blur-md md:p-6">
               <div className="mb-8 flex items-start justify-between">
                 <div>
-                  <p className="mb-2 text-[8px] font-bold uppercase tracking-[0.3em] text-[#ff8a76]">
-                    Ruta destacada
-                  </p>
-
                   <p className="text-lg font-black uppercase tracking-[0.05em] text-white">
-                    Costa Pacífico
+                    <T>Rutas Destacadas</T>
                   </p>
                 </div>
 
@@ -131,7 +127,7 @@ export function Hero() {
               <div className="grid grid-cols-2 gap-px bg-white/15">
                 <div className="bg-[#14263d]/80 p-3">
                   <p className="mb-1 text-[7px] font-bold uppercase tracking-[0.2em] text-white/35">
-                    Latitud
+                    <T>Latitud</T>
                   </p>
 
                   <p className="font-mono text-[10px] text-white/80">
@@ -141,7 +137,7 @@ export function Hero() {
 
                 <div className="bg-[#14263d]/80 p-3">
                   <p className="mb-1 text-[7px] font-bold uppercase tracking-[0.2em] text-white/35">
-                    Longitud
+                    <T>Longitud</T>
                   </p>
 
                   <p className="font-mono text-[10px] text-white/80">
@@ -167,7 +163,7 @@ export function Hero() {
         {/* Pie del Hero */}
         <div className="mt-10 flex items-center justify-between border-t border-white/20 pt-4">
           <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-white/35">
-            Diseñado para explorar
+            <T>Diseñado para explorar</T>
           </span>
 
           <div className="flex items-center gap-3">

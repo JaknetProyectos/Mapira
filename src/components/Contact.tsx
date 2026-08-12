@@ -171,30 +171,26 @@ export function Contact() {
                 <div className="mt-8 grid grid-cols-2 gap-px bg-white/15">
                   <div className="bg-[#14263d] p-4">
                     <p className="mb-2 text-[7px] font-bold uppercase tracking-[0.24em] text-white/30">
-                      Respuesta
+                      <T>Respuesta</T>
                     </p>
 
                     <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/65">
-                      Menos de 24 h
+                      <T>Menos de 24 h</T>
                     </p>
                   </div>
 
                   <div className="bg-[#14263d] p-4">
                     <p className="mb-2 text-[7px] font-bold uppercase tracking-[0.24em] text-white/30">
-                      Servicio
+                      <T>Servicio</T>
                     </p>
 
                     <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/65">
-                      Personalizado
+                      <T>Personalizado</T>
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-8 flex items-center justify-between border-t border-white/15 pt-4">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-white/30">
-                    Route design office
-                  </span>
-
                   <span className="h-2 w-2 rounded-full bg-[#ff5f49]" />
                 </div>
               </div>
@@ -206,11 +202,11 @@ export function Contact() {
             <div className="flex items-center justify-between border-b border-[#14263d]/20 px-6 py-5 sm:px-8 lg:px-10">
               <div>
                 <p className="mb-1 text-[8px] font-bold uppercase tracking-[0.3em] text-[#ff5f49]">
-                  Solicitud de ruta
+                  <T>Solicitud de ruta</T>
                 </p>
 
                 <p className="text-sm font-black uppercase tracking-[0.1em] text-[#14263d]">
-                  Primeras coordenadas
+                  <T>Primeras coordenadas</T>
                 </p>
               </div>
 
@@ -230,11 +226,11 @@ export function Contact() {
 
                 <div>
                   <p className="text-sm font-bold uppercase tracking-[0.08em] text-[#14263d]">
-                    Información del viajero
+                    <T>Información del viajero</T>
                   </p>
 
                   <p className="mt-1 text-xs font-medium leading-relaxed text-[#14263d]/50">
-                    Completa tus datos para comenzar el diseño de la ruta.
+                    <T>Completa tus datos para comenzar el diseño de la ruta.</T>
                   </p>
                 </div>
               </div>
@@ -364,11 +360,11 @@ export function Contact() {
               <div className="mt-12 flex flex-col gap-5 border-t border-[#14263d]/15 pt-7 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="mb-1 text-[7px] font-bold uppercase tracking-[0.24em] text-[#14263d]/30">
-                    Tiempo estimado de respuesta
+                    <T>Tiempo estimado de respuesta</T>
                   </p>
 
                   <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#14263d]/55">
-                    Dentro de las próximas 24 horas
+                    <T>Dentro de las próximas 24 horas</T>
                   </p>
                 </div>
 
@@ -392,7 +388,7 @@ export function Contact() {
 
             <div className="flex items-center justify-between border-t border-[#14263d]/20 bg-[#e8e1d4] px-6 py-4 sm:px-8 lg:px-10">
               <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#14263d]/35">
-                Información protegida
+                <T>Información protegida</T>
               </span>
 
               <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#ff5f49]">

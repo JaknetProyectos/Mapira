@@ -89,7 +89,7 @@ export function Experiences() {
           <div className="grid items-end gap-8 lg:grid-cols-[1fr_360px]">
             <div>
               <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.26em] text-[#ff5f49]">
-                Curaduría de rutas
+                <T>Curaduría de rutas</T>
               </p>
 
               <h2 className="max-w-4xl text-5xl font-black uppercase leading-[0.88] tracking-[-0.055em] text-[#14263d] sm:text-6xl md:text-7xl lg:text-8xl">
@@ -155,7 +155,7 @@ export function Experiences() {
                     <span className="h-2 w-2 rounded-full bg-[#ff5f49] shadow-[0_0_0_6px_rgba(255,95,73,0.2)]" />
 
                     <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/75">
-                      Ruta seleccionada
+                     <T>Ruta seleccionada</T>
                     </span>
                   </div>
 
@@ -186,7 +186,7 @@ export function Experiences() {
                     <span className="h-px w-8 bg-[#ff5f49]" />
 
                     <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-[#14263d]/40">
-                      Explorar categoría
+                      <T>Explorar categoría</T>
                     </span>
                   </div>
                 </div>

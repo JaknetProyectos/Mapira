@@ -55,7 +55,7 @@ export function Pricing() {
             <span className="h-2 w-2 bg-[#ff5f49]" />
 
             <span className="text-[9px] font-bold uppercase tracking-[0.34em] text-[#14263d]/50">
-              Método Mapira
+              <T>Método</T> <T>Mapira</T>
             </span>
           </div>
 
@@ -141,11 +141,11 @@ export function Pricing() {
             <div className="flex items-center justify-between border-b border-[#14263d]/20 px-6 py-5 sm:px-8">
               <div>
                 <p className="mb-1 text-[8px] font-bold uppercase tracking-[0.3em] text-[#ff5f49]">
-                  Principios de servicio
+                  <T>Principios de servicio</T>
                 </p>
 
                 <p className="text-sm font-black uppercase tracking-[0.1em] text-[#14263d]">
-                  Nuestra forma de viajar
+                  <T>Nuestra forma de viajar</T>
                 </p>
               </div>
 
@@ -188,7 +188,7 @@ export function Pricing() {
                       <span className="h-px w-8 bg-[#14263d]/20 transition-all duration-300 group-hover:w-14 group-hover:bg-[#ff5f49]" />
 
                       <span className="text-[7px] font-bold uppercase tracking-[0.24em] text-[#14263d]/30">
-                        Estándar Mapira
+                        <T>Estándar Mapira</T>
                       </span>
                     </div>
                   </div>
@@ -198,7 +198,7 @@ export function Pricing() {
 
             <div className="flex items-center justify-between border-t border-[#14263d]/20 bg-[#e9e2d5] px-6 py-4 sm:px-8">
               <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#14263d]/35">
-                Ruta diseñada individualmente
+                <T>Ruta diseñada individualmente</T>
               </span>
 
               <span className="h-2 w-2 rounded-full bg-[#ff5f49]" />

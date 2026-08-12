@@ -631,7 +631,7 @@ export default function CotizarPage() {
                   <div className="mt-8 grid grid-cols-2 gap-px bg-white/15">
                     <div className="bg-[#14263d] p-4">
                       <p className="mb-2 text-[7px] font-bold uppercase tracking-[0.22em] text-white/30">
-                        Respuesta
+                        <T>Respuesta</T>
                       </p>
 
                       <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/70">

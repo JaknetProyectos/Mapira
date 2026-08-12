@@ -152,8 +152,8 @@ export function Footer() {
 
           <div className="mt-8 flex flex-col gap-4 border-t border-white/15 pt-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-lg text-sm font-medium leading-relaxed text-white/50">
-              Diseñamos rutas personales para descubrir México desde nuevas
-              coordenadas.
+             <T> Diseñamos rutas personales para descubrir México desde nuevas
+              coordenadas.</T>
             </p>
 
             <a
@@ -182,8 +182,8 @@ export function Footer() {
             </p>
 
             <p className="mt-2 max-w-sm text-xs font-medium leading-relaxed text-white/40">
-              Trazando nuevas maneras de explorar la esencia y diversidad de
-              México.
+              <T>Trazando nuevas maneras de explorar la esencia y diversidad de
+              México.</T>
             </p>
           </div>
 
@@ -191,7 +191,7 @@ export function Footer() {
 <div className="border-b border-white/15 p-6 md:border-b-0 xl:border-r">
   <div className="mb-7 flex items-center justify-between">
     <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#ff7865]">
-      <T>Métodos Asegurados</T>
+      <T>Métodos </T><T>Asegurados</T>
     </p>
 
     <span className="font-mono text-[8px] text-white/25">
@@ -238,7 +238,7 @@ export function Footer() {
   </div>
 
   <p className="mt-5 max-w-sm text-xs font-medium leading-relaxed text-white/40">
-    Transacciones protegidas mediante cifrado de extremo a extremo.
+    <T>Transacciones protegidas mediante cifrado de extremo a extremo.</T>
   </p>
 </div>
 
@@ -246,7 +246,7 @@ export function Footer() {
           <div className="p-6 md:col-span-2 xl:col-span-1">
             <div className="mb-7 flex items-center justify-between">
               <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#ff7865]">
-                Información legal
+                <T>Información legal</T>
               </p>
 
               <span className="font-mono text-[8px] text-white/25">LEG—03</span>
@@ -281,7 +281,7 @@ export function Footer() {
             <span className="h-2 w-2 rounded-full bg-[#ff6650]" />
 
             <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-white/30">
-              Mapira Journey System
+              Mapira. <T> El sistema para tu viaje</T>
             </span>
           </div>
 

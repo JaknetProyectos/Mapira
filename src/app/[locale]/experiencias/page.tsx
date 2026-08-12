@@ -203,8 +203,8 @@ function ExperienciasContent() {
 
             <div className="border-l-2 border-[#ff5f49] pl-5">
               <p className="text-sm font-medium leading-relaxed text-[#14263d]/60 md:text-base">
-                Explora nuestra selección de rutas, experiencias y planes
-                diseñados para descubrir nuevas coordenadas.
+                <T>Explora nuestra selección de rutas, experiencias y planes
+                diseñados para descubrir nuevas coordenadas.</T>
               </p>
 
               <div className="mt-6 flex items-center justify-between border-t border-[#14263d]/15 pt-4">
@@ -226,7 +226,7 @@ function ExperienciasContent() {
               <div className="border-b border-[#14263d]/20 lg:border-b-0 lg:border-r">
                 <div className="flex items-center justify-between border-b border-[#14263d]/15 bg-[#e8e1d4] px-5 py-4">
                   <span className="text-[8px] font-bold uppercase tracking-[0.28em] text-[#14263d]/40">
-                    Clasificación de rutas
+                    <T>Clasificación de rutas</T>
                   </span>
 
                   <span className="font-mono text-[8px] text-[#14263d]/30">

@@ -514,15 +514,15 @@ function CheckoutContent() {
                     </p>
 
                     <h2 className="text-lg font-black uppercase tracking-[-0.01em] text-white sm:text-xl">
-                      <T>Método de Pago</T>
+                      <T>Método </T><T>de Pago</T>
                     </h2>
                   </div>
                 </div>
 
                 <img
-                  src="/logo-octano-2"
+                  src="/logo-octano-2.png"
                   alt="Powered by Etomin"
-                  className="h-7 max-w-[100px] object-contain brightness-0 invert sm:max-w-none"
+                  className="h-7 max-w-[100px] object-contain"
                 />
               </div>
 

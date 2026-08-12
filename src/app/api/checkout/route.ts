@@ -8,7 +8,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // --- CREDENCIALES OCTANO ---
-const OCTANO_EMAIL = process.env.OCTANO_EMAIL!;
+const OCTANO_USER = process.env.OCTANO_USER!;
 const OCTANO_PASSWORD = process.env.OCTANO_PASSWORD!;
 const OCTANO_BASE_URL = 'https://pagos.octanopayments.com/api/v1';
 
@@ -18,7 +18,7 @@ const formatPrice = (price: number) => new Intl.NumberFormat("es-MX", { style: "
 const getOctanoHeaders = (extraHeaders = {}) => ({
   'Accept': 'application/json',
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-  'Origin': 'https://horizontrip.com.mx', 
+  'Origin': 'https://mapira.mx', 
   ...extraHeaders
 });
 
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     const signinData = await safeOctanoFetch(`${OCTANO_BASE_URL}/signin`, {
       method: 'POST',
       headers: getOctanoHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
-      body: new URLSearchParams({ email: OCTANO_EMAIL, password: OCTANO_PASSWORD }).toString()
+      body: new URLSearchParams({ email: OCTANO_USER, password: OCTANO_PASSWORD }).toString()
     }, 'Login Octano');
     
     if (!signinData.authToken) {
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
     // 2. TOKENIZACIÓN DE TARJETA OCTANO
     const cardPayload = {
       cardData: {
-        cardNumber: cardInfo.number.replace(/\s/g, ''), // Octano prefiere el número sin espacios
+        cardNumber: cardInfo.number.replace(/\s/g, ''), 
         cardholderName: cardInfo.name,
         expirationMonth: cardInfo.expiry.split('/')[0].trim(),
         expirationYear: cardInfo.expiry.split('/')[1].trim(),
@@ -113,7 +113,7 @@ export async function POST(req: Request) {
         cvv: cardInfo.cvv.replace(/\s/g, '')
       },
       items: octanoItems,
-      redirectUrl: 'https://horizontrip.com.mx' 
+      redirectUrl: 'https://mapira.mx' 
     };
 
     const saleData = await safeOctanoFetch(`${OCTANO_BASE_URL}/sale`, {
@@ -132,12 +132,12 @@ export async function POST(req: Request) {
 
     // 5. GUARDAR EN SUPABASE
     const { data: customer, error: custError } = await supabase
-      .from('customers_mp')
+      .from('customers_mp') 
       .upsert({ 
         first_name: contactInfo.firstName, 
-        last_name: contactInfo.lastName, 
+        last_name: contactInfo.lastName || 'Sin apellido', 
         email: contactInfo.email, 
-        phone: contactInfo.phone 
+        phone: contactInfo.phone || ''
       }, { onConflict: 'email' })
       .select().single();
 
@@ -151,7 +151,7 @@ export async function POST(req: Request) {
         total_amount: finalAmountToCharge,
         payment_status: 'paid',
         transaction_id: saleData.transactionId || saleData.authorizationNumber || tempReferenceId,
-        payment_provider: 'octano', // Actualizado a Octano
+        payment_provider: 'octano', 
         payment_date: new Date().toISOString(),
         pais: billingInfo.pais,
         direccion: billingInfo.direccion,
@@ -189,8 +189,8 @@ export async function POST(req: Request) {
     const currentLocale = String(locale || 'es').toLowerCase();
     const isEnglish = currentLocale.startsWith('en')
     const subjectClient = isEnglish 
-      ? `Booking Confirmation - Thank you for traveling with HorizonTrip` 
-      : `Confirmación de Reserva - Gracias por viajar con HorizonTrip`;
+      ? `Booking Confirmation - Thank you for traveling with Mapira` 
+      : `Confirmación de Reserva - Gracias por viajar con Mapira`;
 
     const greeting = isEnglish ? `Hello ${contactInfo.firstName},` : `Estimado/a ${contactInfo.firstName},`;
     const confirmationText = isEnglish ? "Your dossier has been confirmed and your payment was successfully processed." : "Tu dossier ha sido confirmado y el pago se procesó exitosamente.";
@@ -263,7 +263,7 @@ export async function POST(req: Request) {
     `;
 
     await resend.emails.send({
-      from: 'HorizonTrip Concierge <hola@horizontrip.com.mx>', 
+      from: 'Mapira Concierge <hola@mapira.mx>', 
       to: [contactInfo.email], 
       subject: subjectClient,
       html: htmlClient,
@@ -275,7 +275,7 @@ export async function POST(req: Request) {
     const htmlInternal = `
       <div style="font-family: sans-serif; color: #333;">
         <h2 style="color: #0f4c3a;">¡Nuevo Dossier Confirmado! (Vía Octano)</h2>
-        <p>Se ha procesado un pago exitoso a través de la plataforma HorizonTrip.</p>
+        <p>Se ha procesado un pago exitoso a través de la plataforma Mapira.</p>
         <hr/>
         <p><strong>Valor de Inversión:</strong> ${formattedTotal}</p>
         <p><strong>ID Transacción (Octano):</strong> ${saleData.transactionId || saleData.authorizationNumber}</p>
@@ -297,8 +297,8 @@ export async function POST(req: Request) {
     `;
 
     await resend.emails.send({
-      from: 'Sistema HorizonTrip <hola@horizontrip.com.mx>',
-      to: ['hola@horizontrip.com.mx'],
+      from: 'Sistema Mapira <hola@mapira.mx>',
+      to: ['hola@mapira.mx'],
       subject: subjectInternal,
       html: htmlInternal,
     });
