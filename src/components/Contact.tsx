@@ -20,11 +20,17 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const locale = useLocale();
 
+  // Validación estricta para proteger el botón
+  const isFormValid = formData.name && formData.email && formData.phone;
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!isFormValid) return;
+
     setIsSubmitting(true);
 
     try {
+      // 1. Guardar en Supabase
       const { error: dbError } = await supabase
         .from("contact_messages_mp")
         .insert([
@@ -36,8 +42,12 @@ export function Contact() {
           },
         ]);
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        console.error("❌ Error en Supabase:", dbError);
+        throw new Error("No se pudo guardar en la base de datos.");
+      }
 
+      // 2. Enviar correo a través de la API
       const response = await fetch("/api/send", {
         method: "POST",
         headers: {
@@ -45,19 +55,28 @@ export function Contact() {
         },
         body: JSON.stringify({
           type: "CONTACT",
-          ...formData,
+          locale: locale, // Locale inyectado correctamente
           customerName: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
         }),
       });
 
-      if (!response.ok) throw new Error("No se pudo enviar");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("❌ Error en Resend / API:", errorData);
+        throw new Error("No se pudo enviar el correo");
+      }
 
+      // Alerta de éxito traducida según locale
       alert(
         locale === "en"
           ? "Message sent successfully!"
           : "¡Mensaje enviado con éxito!"
       );
 
+      // Limpiar formulario
       setFormData({
         name: "",
         phone: "",
@@ -65,6 +84,7 @@ export function Contact() {
         message: "",
       });
     } catch (error) {
+      console.error("Error capturado en el catch:", error);
       alert(
         locale === "en"
           ? "There was an error sending your message."
@@ -158,7 +178,7 @@ export function Contact() {
 
               <div className="mt-16">
                 <p className="mb-3 text-[8px] font-bold uppercase tracking-[0.3em] text-white/30">
-                  Contacto directo
+                  <T>Contacto directo</T>
                 </p>
 
                 <a
@@ -370,11 +390,14 @@ export function Contact() {
 
                 <Button
                   type="submit"
-                  disabled={!formData.name || isSubmitting}
+                  disabled={!isFormValid || isSubmitting}
                   className="group h-16 w-full rounded-none border border-[#14263d] bg-[#14263d] px-8 text-[9px] font-bold uppercase tracking-[0.24em] text-white shadow-none transition-all duration-300 hover:border-[#ff5f49] hover:bg-[#ff5f49] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
                   {isSubmitting ? (
-                    <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                    <>
+                      <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                      <T>Enviando...</T>
+                    </>
                   ) : (
                     <T>Enviar Solicitud</T>
                   )}
