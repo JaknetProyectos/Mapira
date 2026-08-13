@@ -263,7 +263,7 @@ function CheckoutContent() {
         <div className="mb-12 grid items-end gap-8 border-b border-[#14263d]/20 pb-10 lg:grid-cols-[1fr_320px]">
           <div>
             <p className="mb-4 font-mono text-[9px] font-bold uppercase tracking-[0.26em] text-[#ff5f49]">
-              Confirmación de expedición
+              <T>Confirmación de expedición</T>
             </p>
 
             <h1 className="text-5xl font-black uppercase leading-[0.85] tracking-[-0.055em] text-[#14263d] sm:text-6xl md:text-7xl lg:text-8xl">
@@ -273,8 +273,8 @@ function CheckoutContent() {
 
           <div className="border-l-2 border-[#ff5f49] pl-5">
             <p className="text-sm font-medium leading-relaxed text-[#14263d]/55">
-              Revisa tus datos, confirma las coordenadas de facturación y
-              autoriza el pago de tu ruta.
+              <T>Revisa tus datos, confirma las coordenadas de facturación y</T>
+              <T>autoriza el pago de tu ruta.</T>
             </p>
           </div>
         </div>
@@ -297,7 +297,7 @@ function CheckoutContent() {
 
                   <div>
                     <p className="mb-1 font-mono text-[8px] uppercase tracking-[0.25em] text-[#ff5f49]">
-                      Etapa 01
+                      <T>Etapa</T> 01
                     </p>
 
                     <h2 className="text-lg font-black uppercase tracking-[-0.01em] text-[#14263d] sm:text-xl">
@@ -380,7 +380,7 @@ function CheckoutContent() {
 
                   <div>
                     <p className="mb-1 font-mono text-[8px] uppercase tracking-[0.25em] text-[#ff5f49]">
-                      Etapa 02
+                      <T>Etapa</T> 02
                     </p>
 
                     <h2 className="text-lg font-black uppercase tracking-[-0.01em] text-[#14263d] sm:text-xl">
@@ -510,7 +510,7 @@ function CheckoutContent() {
 
                   <div>
                     <p className="mb-1 font-mono text-[8px] uppercase tracking-[0.25em] text-[#ff7561]">
-                      Etapa 03
+                      <T>Etapa</T> 03
                     </p>
 
                     <h2 className="text-lg font-black uppercase tracking-[-0.01em] text-white sm:text-xl">

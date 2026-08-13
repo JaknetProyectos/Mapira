@@ -268,11 +268,11 @@ export default function PagoFolioPage() {
               <div className="flex items-center justify-between border-b border-[#14263d]/20 bg-[#e8e1d4] px-6 py-5 sm:px-8 lg:px-10">
                 <div>
                   <p className="mb-1 text-[8px] font-bold uppercase tracking-[0.3em] text-[#ff5f49]">
-                    Folio asignado
+                    <T>Folio asignado</T>
                   </p>
 
                   <p className="text-sm font-black uppercase tracking-[0.1em] text-[#14263d]">
-                    Registro de liquidación
+                    <T>Registro de liquidación</T>
                   </p>
                 </div>
 
@@ -319,11 +319,11 @@ export default function PagoFolioPage() {
 
                     <div className="mt-5 flex items-center justify-between">
                       <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-white/30">
-                        Mexican pesos
+                        MXN
                       </span>
 
                       <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-white/30">
-                        Tax included
+                        <T>IVA incluido</T>
                       </span>
                     </div>
                   </div>
@@ -354,7 +354,11 @@ export default function PagoFolioPage() {
                         value={nombre}
                         onChange={(e) => setNombre(e.target.value)}
                         required
-                        placeholder="Nombre completo"
+                        placeholder={
+                          locale === "en"
+                            ? "Full name"
+                            : "Nombre completo"
+                        }
                         className={`${inputClass} pl-7`}
                       />
                     </div>
@@ -454,12 +458,12 @@ export default function PagoFolioPage() {
                 <div className="mt-12 flex flex-col gap-6 border-t border-[#14263d]/15 pt-8 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="mb-2 text-[7px] font-bold uppercase tracking-[0.23em] text-[#14263d]/30">
-                      Siguiente etapa
+                      <T>Siguiente etapa</T>
                     </p>
 
                     <p className="max-w-sm text-xs font-medium leading-relaxed text-[#14263d]/50">
-                      El folio se añadirá a tu carrito para continuar con la
-                      autorización segura del pago.
+                      <T>El folio se añadirá a tu carrito para continuar con la
+                      autorización segura del pago.</T>
                     </p>
                   </div>
 
@@ -479,7 +483,7 @@ export default function PagoFolioPage() {
 
               <div className="flex items-center justify-between border-t border-[#14263d]/20 bg-[#e8e1d4] px-6 py-4 sm:px-8 lg:px-10">
                 <span className="font-mono text-[7px] uppercase tracking-[0.22em] text-[#14263d]/35">
-                  Secure folio processing
+                  <T>Procesamiento seguro de folio</T>
                 </span>
 
                 <span className="font-mono text-[7px] uppercase tracking-[0.22em] text-[#ff5f49]">

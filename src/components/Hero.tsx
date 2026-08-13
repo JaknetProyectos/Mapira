@@ -102,9 +102,9 @@ export function Hero() {
               </p>
 
               <span className="hidden font-mono text-[9px] uppercase leading-relaxed tracking-[0.2em] text-white/35 sm:block">
-                Selected
+                <T>Rutas</T>
                 <br />
-                routes
+                <T>Seleccionadas</T>
                 <br />
                 2026
               </span>

@@ -183,7 +183,6 @@ INSERT INTO public.activities_mp (slug, title, plan_type, destination, price, cu
 '{"duracion_estimada": "5 horas", "no_incluye": ["transporte", "consumos premium", "adicionales", "propinas"]}'::jsonb, 1,
 '["https://images.pexels.com/photos/36097854/pexels-photo-36097854.jpeg"]'::jsonb),
 
--- CORRECCIÓN DEL SLUG DUPLICADO: Se cambió de 'sabores-nocturnos' a 'sabores-nocturnos-cdmx'
 ('sabores-nocturnos-cdmx', 'Sabores Nocturnos CDMX', 'PLAN', 'Ciudad de México', 1850.00, 'MXN', true, 'Recorrido nocturno por la escena gastronómica de la ciudad, combinando tacos, antojitos y bebidas en un ambiente vibrante y auténtico.', 
 '["Zona rosa", "Colonia Juárez", "Taquerías y spots nocturnos"]'::jsonb, 
 '[" 4 a 6 degustaciones", "Bebidas seleccionadas", "Guía", "Explicación nocturna"]'::jsonb, 
@@ -213,7 +212,7 @@ INSERT INTO public.activities_mp (slug, title, plan_type, destination, price, cu
 '["Barrio de la Cruz", "Mercado La Cruz", "Calles con oferta local"]'::jsonb, 
 '["4 a 6 degustaciones", "Bebida tradicional", "Guía local", "Experiencia cultural"]'::jsonb, 
 '{"duracion_estimada": "3 a 4 horas", "no_incluye": ["transporte", "consumos extra", "propinas"]}'::jsonb, 1,
-	'["https://images.pexels.com/photos/12541111/pexels-photo-12541111.jpeg"]'::jsonb),
+'["https://images.pexels.com/photos/12541111/pexels-photo-12541111.jpeg"]'::jsonb),
 
 ('ruta-gastronomica-tradicional-queretaro', 'Ruta Gastronómica Tradicional Querétaro', 'PLAN', 'Querétaro', 950.00, 'MXN', true, 'Recorrido diseñado para conocer los platillos más representativos del estado, combinando historia, tradición y cocina local.', 
 '["Centro Histórico de Querétaro", "Mercados y fondas tradicionales", "Plazas y corredores turísticos"]'::jsonb, 
@@ -299,7 +298,7 @@ INSERT INTO public.activities_mp (slug, title, plan_type, destination, price, cu
 ('explorer-riviera', 'Explorer Riviera', 'EXPERIENCIA', 'Riviera Maya', 5500.00, 'MXN', true, 'Paquete base con tour gastronómico, visita a Tulum, playa y coordinación de actividades.', 
 '["Cancún o Playa del Carmen", "Tulum", "Tiempo libre en playa"]'::jsonb, 
 '["Tour gastronómico tipo tacos", "Visita a Tulum", "Coordinación de actividades", "Guía en experiencias seleccionadas"]'::jsonb, 
-'{"duracion_estimada": "Día completo", "no_incluye": ["Vuelos", "Hospedaje", "Transporte"]}'::jsonb, 
+'{"duracion_estimada": "Día completo", "no_incluye": ["Vuelos", "Hospedaje", "Transporte"]}'::jsonb, 2,
 '["https://images.pexels.com/photos/6015672/pexels-photo-6015672.jpeg"]'::jsonb),
 
 ('adventure-flavors', 'Adventure & Flavors', 'EXPERIENCIA', 'Riviera Maya', 7800.00, 'MXN', true, 'Escapada con tour gastronómico premium, cenote y actividad acuática.', 

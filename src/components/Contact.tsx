@@ -137,7 +137,7 @@ export function Contact() {
                   </span>
                 </div>
 
-                <h2 className="text-5xl font-black uppercase leading-[0.84] tracking-[-0.055em] sm:text-6xl lg:text-7xl xl:text-8xl">
+                <h2 className="text-5xl font-black uppercase leading-[0.84] tracking-[-0.055em] sm:text-6xl lg:text-xl xl:text-7xl">
                   <T>Inicia tu</T>
 
                   <span className="mt-2 block text-[#ff6550]">

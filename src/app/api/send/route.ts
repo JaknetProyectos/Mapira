@@ -3,10 +3,10 @@ import { NextResponse } from 'next/server';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Mismos tonos usados en checkout/route.ts
-const primaryColor = '#0f4c3a'; // Verde Selva / Deep Jungle
-const accentColor = '#14b8a6'; // Turquesa
-const bgSoft = '#f7fafc';
+// Tonos sincronizados con la sección Hero
+const primaryColor = '#14263d'; // Azul Oscuro
+const accentColor = '#ff5f49';  // Naranja Coral
+const bgSoft = '#f9f8f6';       // Crema cálido sutil
 const textDark = '#1a202c';
 const textBase = '#4a5568';
 const textMuted = '#718096';
@@ -28,11 +28,11 @@ function emptyLabel(isEnglish: boolean, fallback?: string) {
 
 function getLogoHeader(subtitle: string) {
   return `
-    <div style="background-color: ${primaryColor}; padding: 50px 30px; text-align: center;">
+    <div style="background-color: ${primaryColor}; padding: 50px 30px; text-align: center; border-bottom: 4px solid ${accentColor};">
       <h1 style="color: white; margin: 0; font-size: 32px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; font-family: 'Times New Roman', Times, serif;">
-        HORIZON<span style="font-style: italic; color: ${accentColor}; font-weight: 300;">TRIP.</span>
+        Mapira<span style="font-style: italic; color: ${accentColor}; font-weight: 300;">TRIP.</span>
       </h1>
-      <p style="color: ${accentColor}; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; font-family: Arial, sans-serif;">
+      <p style="color: #ffffff; opacity: 0.7; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; font-family: Arial, sans-serif;">
         ${subtitle}
       </p>
     </div>
@@ -128,7 +128,7 @@ export async function POST(req: Request) {
             }
           </p>
 
-          <div style="margin: 35px 0; padding: 28px; background-color: ${bgSoft}; border-left: 2px solid ${primaryColor}; font-family: Arial, sans-serif;">
+          <div style="margin: 35px 0; padding: 28px; background-color: ${bgSoft}; border-left: 2px solid ${accentColor}; font-family: Arial, sans-serif;">
             <p style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: ${primaryColor}; margin-top: 0; margin-bottom: 15px;">
               ${isEnglish ? 'Your message record' : 'Registro de tu mensaje'}
             </p>
@@ -139,7 +139,7 @@ export async function POST(req: Request) {
 
           <div style="text-align: center; margin-top: 40px; font-family: Arial, sans-serif;">
             <a href="https://mapira.mx/${isEnglish ? 'en' : 'es'}#experiencias" 
-              style="display: inline-block; background-color: ${primaryColor}; color: #ffffff; padding: 16px 32px; border-radius: 9999px; text-decoration: none; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">
+              style="display: inline-block; background-color: ${accentColor}; color: #ffffff; padding: 16px 32px; border-radius: 9999px; text-decoration: none; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">
               ${isEnglish ? 'Explore Experiences' : 'Explorar Experiencias'}
             </a>
           </div>
@@ -161,7 +161,7 @@ export async function POST(req: Request) {
             }
           </p>
 
-          <div style="padding: 28px; background-color: ${bgSoft}; border-left: 2px solid ${primaryColor}; font-family: Arial, sans-serif;">
+          <div style="padding: 28px; background-color: ${bgSoft}; border-left: 2px solid ${accentColor}; font-family: Arial, sans-serif;">
             <p style="margin: 10px 0; font-size: 13px; color: ${textBase};"><strong>${isEnglish ? 'Name:' : 'Nombre:'}</strong> ${safeName}</p>
             <p style="margin: 10px 0; font-size: 13px; color: ${textBase};"><strong>Email:</strong> ${safeEmail}</p>
             <p style="margin: 10px 0; font-size: 13px; color: ${textBase};"><strong>${isEnglish ? 'Phone:' : 'Teléfono:'}</strong> ${safePhone}</p>
@@ -249,7 +249,7 @@ export async function POST(req: Request) {
           ${
             message
               ? `
-                <div style="background-color: ${bgSoft}; padding: 24px; border-left: 2px solid ${primaryColor}; font-family: Arial, sans-serif;">
+                <div style="background-color: ${bgSoft}; padding: 24px; border-left: 2px solid ${accentColor}; font-family: Arial, sans-serif;">
                   <p style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: ${primaryColor}; margin-top: 0;">
                     ${isEnglish ? 'Special requests' : 'Requerimientos especiales'}
                   </p>
@@ -278,7 +278,7 @@ export async function POST(req: Request) {
             }
           </p>
 
-          <div style="padding: 28px; background-color: ${bgSoft}; border-left: 2px solid ${primaryColor}; font-family: Arial, sans-serif;">
+          <div style="padding: 28px; background-color: ${bgSoft}; border-left: 2px solid ${accentColor}; font-family: Arial, sans-serif;">
             <p style="margin: 10px 0; font-size: 13px; color: ${textBase};"><strong>${isEnglish ? 'Client:' : 'Cliente:'}</strong> ${safeName}</p>
             <p style="margin: 10px 0; font-size: 13px; color: ${textBase};"><strong>${isEnglish ? 'Destination:' : 'Destino:'}</strong> ${safeDestination}</p>
             <p style="margin: 10px 0; font-size: 13px; color: ${textBase};"><strong>${isEnglish ? 'Start date:' : 'Fecha:'}</strong> ${safeStartDate}</p>

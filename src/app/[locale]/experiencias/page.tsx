@@ -189,7 +189,7 @@ function ExperienciasContent() {
           <section className="grid items-end gap-10 border-b border-[#14263d]/20 py-12 lg:grid-cols-[1fr_340px] lg:py-16">
             <div>
               <p className="mb-5 font-mono text-[9px] font-bold uppercase tracking-[0.27em] text-[#ff5f49]">
-                Atlas de experiencias
+                <T>Atlas de experiencias</T>
               </p>
 
               <h1 className="max-w-5xl text-5xl font-black uppercase leading-[0.84] tracking-[-0.06em] text-[#14263d] sm:text-6xl md:text-7xl lg:text-8xl">
@@ -209,7 +209,7 @@ function ExperienciasContent() {
 
               <div className="mt-6 flex items-center justify-between border-t border-[#14263d]/15 pt-4">
                 <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#14263d]/35">
-                  Rutas disponibles
+                  <T>Rutas disponibles</T>
                 </span>
 
                 <span className="font-mono text-[9px] font-bold text-[#ff5f49]">
@@ -230,7 +230,7 @@ function ExperienciasContent() {
                   </span>
 
                   <span className="font-mono text-[8px] text-[#14263d]/30">
-                    FILTER—01
+                    <T>FILTRO</T>-01
                   </span>
                 </div>
 
@@ -274,11 +274,11 @@ function ExperienciasContent() {
               <div>
                 <div className="flex items-center justify-between border-b border-[#14263d]/15 bg-[#e8e1d4] px-5 py-4">
                   <span className="text-[8px] font-bold uppercase tracking-[0.28em] text-[#14263d]/40">
-                    Búsqueda
+                    <T>Búsqueda</T>
                   </span>
 
                   <span className="font-mono text-[8px] text-[#14263d]/30">
-                    SEARCH—02
+                    <T>BUSCAR</T>-02
                   </span>
                 </div>
 
@@ -303,11 +303,11 @@ function ExperienciasContent() {
           <section className="pb-32 pt-12">
             <div className="mb-6 flex items-center justify-between border-b border-[#14263d]/20 pb-4">
               <span className="text-[8px] font-bold uppercase tracking-[0.28em] text-[#14263d]/40">
-                Directorio de experiencias
+                <T>Directorio de experiencias</T>
               </span>
 
               <span className="font-mono text-[9px] text-[#ff5f49]">
-                {String(filteredExperiences.length).padStart(2, "0")} RESULTS
+                {String(filteredExperiences.length).padStart(2, "0")} <T>RESULTADOS</T>
               </span>
             </div>
 
@@ -327,7 +327,7 @@ function ExperienciasContent() {
 
                 <div className="flex flex-col justify-center px-7 py-12 sm:px-12">
                   <p className="mb-4 font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-[#ff5f49]">
-                    Search / No Results
+                    <T>Sin resultados</T>
                   </p>
 
                   <h3 className="text-3xl font-black uppercase tracking-[-0.03em] text-[#14263d] md:text-4xl">
@@ -414,7 +414,7 @@ function ExperienciasContent() {
                           <div className="flex items-end justify-between gap-5">
                             <div>
                               <p className="mb-2 text-[7px] font-bold uppercase tracking-[0.22em] text-[#14263d]/35">
-                                Inversión individual
+                                <T>Inversión individual</T>
                               </p>
 
                               <span className="text-lg font-black tracking-[-0.025em] text-[#14263d]">
@@ -431,7 +431,7 @@ function ExperienciasContent() {
                             <span className="h-px w-8 bg-[#ff5f49] transition-all duration-300 group-hover:w-14" />
 
                             <span className="text-[7px] font-bold uppercase tracking-[0.22em] text-[#14263d]/35">
-                              Consultar experiencia
+                              <T>Consultar experiencia</T>
                             </span>
                           </div>
                         </div>

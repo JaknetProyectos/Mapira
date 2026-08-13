@@ -42,7 +42,6 @@ export async function POST(req: Request) {
     const tempReferenceId = `REF-${Date.now()}`;
 
     // 1. SIGNIN EN OCTANO
-    // Nota: Octano requiere x-www-form-urlencoded para el inicio de sesión
     const signinData = await safeOctanoFetch(`${OCTANO_BASE_URL}/signin`, {
       method: 'POST',
       headers: getOctanoHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
@@ -93,7 +92,7 @@ export async function POST(req: Request) {
     // 4. PROCESAR LA VENTA
     const salePayload = {
       amount: Number(finalAmountToCharge.toFixed(2)),
-      currency: 484, // MXN Obligatorio en Octano
+      currency: 484, 
       reference: tempReferenceId,
       customerInformation: {
         firstName: contactInfo.firstName,
@@ -174,7 +173,6 @@ export async function POST(req: Request) {
           pax_qty: item.people,
           unit_price: item.pricePerPerson,
           custom_destination: item.experience.plan_type === 'PERSONALIZADA' ? item.experience.destination : null
-
         }));
       if (validBookingItems.length > 0) {
         const { error: itemsError } = await supabase.from('booking_items_mp').insert(validBookingItems);
@@ -182,9 +180,10 @@ export async function POST(req: Request) {
       }  
     }
    
-    // 6. CORREOS ELECTRÓNICOS 
-    const primaryColor = '#0f4c3a'; // Verde Selva / Deep Jungle
-    const accentColor = '#14b8a6'; // Turquesa
+    // 6. CORREOS ELECTRÓNICOS (Actualizado con colores del Hero)
+    const primaryColor = '#14263d'; // Azul Oscuro (Fondo Hero)
+    const accentColor = '#ff5f49';  // Naranja Coral
+    const bgSoft = '#f9f8f6';       // Crema cálido
 
     const currentLocale = String(locale || 'es').toLowerCase();
     const isEnglish = currentLocale.startsWith('en')
@@ -207,8 +206,8 @@ export async function POST(req: Request) {
     
     const htmlClient = `
         <div style="font-family: 'Times New Roman', Times, serif; max-width: 600px; margin: auto; color: #1a202c; border: 1px solid #e2e8f0; border-radius: 0px; overflow: hidden; background-color: #fcfcfc;">
-          <div style="background-color: ${primaryColor}; padding: 50px 30px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;">HORIZON<span style="font-style: italic; color: ${accentColor}; font-weight: 300;">TRIP.</span></h1>
+          <div style="background-color: ${primaryColor}; padding: 50px 30px; text-align: center; border-bottom: 4px solid ${accentColor};">
+            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;">Mapira</h1>
           </div>
           <div style="padding: 50px 40px; background-color: #ffffff;">
             <h2 style="color: ${primaryColor}; margin-top: 0; font-size: 22px; font-weight: normal;">${greeting}</h2>
@@ -247,10 +246,10 @@ export async function POST(req: Request) {
 
             <div style="padding: 20px 0; border-bottom: 1px solid #cbd5e0; margin-bottom: 40px; text-align: right; font-family: Arial, sans-serif;">
               <span style="font-size: 12px; font-weight: bold; color: #a0aec0; text-transform: uppercase; letter-spacing: 2px;">${totalLabel} </span>
-              <span style="font-size: 32px; font-weight: normal; color: ${primaryColor}; display: block; margin-top: 8px; font-family: 'Times New Roman', Times, serif;">${formattedTotal}</span>
+              <span style="font-size: 32px; font-weight: normal; color: ${accentColor}; display: block; margin-top: 8px; font-family: 'Times New Roman', Times, serif;">${formattedTotal}</span>
             </div>
 
-            <div style="padding: 30px; background-color: #f7fafc; border-left: 2px solid ${primaryColor}; font-family: Arial, sans-serif;">
+            <div style="padding: 30px; background-color: ${bgSoft}; border-left: 2px solid ${accentColor}; font-family: Arial, sans-serif;">
               <h3 style="margin: 0 0 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: ${primaryColor};">${detailsLabel}</h3>
               <p style="margin: 10px 0; font-size: 13px; color: #4a5568;"><strong>Email:</strong> ${contactInfo.email}</p>
               <p style="margin: 10px 0; font-size: 13px; color: #4a5568;"><strong>${phoneLabel}</strong> ${contactInfo.phone}</p>
@@ -274,10 +273,10 @@ export async function POST(req: Request) {
     
     const htmlInternal = `
       <div style="font-family: sans-serif; color: #333;">
-        <h2 style="color: #0f4c3a;">¡Nuevo Dossier Confirmado! (Vía Octano)</h2>
+        <h2 style="color: ${primaryColor};">¡Nuevo Dossier Confirmado! (Vía Octano)</h2>
         <p>Se ha procesado un pago exitoso a través de la plataforma Mapira.</p>
         <hr/>
-        <p><strong>Valor de Inversión:</strong> ${formattedTotal}</p>
+        <p><strong>Valor de Inversión:</strong> <span style="color: ${accentColor}; font-weight: bold;">${formattedTotal}</span></p>
         <p><strong>ID Transacción (Octano):</strong> ${saleData.transactionId || saleData.authorizationNumber}</p>
         <hr/>
         <h3>Datos del Viajero:</h3>

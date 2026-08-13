@@ -267,7 +267,7 @@ export default function CotizarPage() {
           <section className="mb-12 grid items-end gap-10 border-b border-[#14263d]/20 pb-12 lg:grid-cols-[1fr_360px]">
             <div>
               <p className="mb-5 font-mono text-[9px] font-bold uppercase tracking-[0.27em] text-[#ff5f49]">
-                Itinerario personalizado
+                <T>Itinerario personalizado</T>
               </p>
 
               <h1 className="max-w-5xl text-5xl font-black uppercase leading-[0.84] tracking-[-0.06em] text-[#14263d] sm:text-6xl md:text-7xl lg:text-8xl">
@@ -290,11 +290,11 @@ export default function CotizarPage() {
 
               <div className="mt-6 flex items-center justify-between border-t border-[#14263d]/15 pt-4">
                 <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#14263d]/35">
-                  Response time
+                  <T>Tiempo de respuesta</T>
                 </span>
 
                 <span className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-[#ff5f49]">
-                  &lt; 24 Horas
+                  &lt; 24 <T>Horas</T>
                 </span>
               </div>
             </div>
@@ -319,7 +319,7 @@ export default function CotizarPage() {
 
                     <div>
                       <p className="mb-1 font-mono text-[8px] uppercase tracking-[0.25em] text-[#ff5f49]">
-                        Etapa 01
+                        <T>Etapa</T> 01
                       </p>
 
                       <h2 className="text-lg font-black uppercase tracking-[-0.01em] text-[#14263d] sm:text-xl">
@@ -329,7 +329,7 @@ export default function CotizarPage() {
                   </div>
 
                   <span className="font-mono text-[9px] text-[#14263d]/30">
-                    ROUTE—01
+                    <T>RUTA</T>-01
                   </span>
                 </div>
 
@@ -515,7 +515,7 @@ export default function CotizarPage() {
 
                     <div>
                       <p className="mb-1 font-mono text-[8px] uppercase tracking-[0.25em] text-[#ff5f49]">
-                        Etapa 02
+                        <T>Etapa</T> 02
                       </p>
 
                       <h2 className="text-lg font-black uppercase tracking-[-0.01em] text-[#14263d] sm:text-xl">
@@ -605,11 +605,11 @@ export default function CotizarPage() {
                   <div className="relative z-10">
                     <div className="mb-6 flex items-center justify-between">
                       <span className="font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-[#ff7561]">
-                        Route Request
+                        <T>Solicitud de Ruta</T>
                       </span>
 
                       <span className="font-mono text-[8px] text-white/30">
-                        STEP—03
+                        <T>PASO</T>—03
                       </span>
                     </div>
 

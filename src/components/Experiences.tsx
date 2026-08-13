@@ -17,7 +17,7 @@ const categoryCards = [
     image:
       "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg",
     tag: "Descubrimiento",
-    slug: "plan", // Coincide con la BD
+    slug: "plan",
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const categoryCards = [
     image:
       "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg",
     tag: "High-End",
-    slug: "experiencia", // Coincide con la BD
+    slug: "experiencia", 
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const categoryCards = [
     image:
       "https://images.pexels.com/photos/331107/pexels-photo-331107.jpeg",
     tag: "Personalizado",
-    slug: "personalizada", // Coincide con la BD
+    slug: "personalizada", 
   },
 ];
 
