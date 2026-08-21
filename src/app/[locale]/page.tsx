@@ -5,6 +5,8 @@ import { Pricing } from "@/components/Pricing";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { FifaSection } from "@/components/FifaSection";
+import { FaqSection } from "@/components/FaqSection";
+
 
 type Props = {
   params: Promise<{ locale: string }>;
