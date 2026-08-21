@@ -127,155 +127,196 @@ export default function ExperienceDetailPage() {
       : "/placeholder.jpg";
 
   const renderWidgetForm = () => (
-    <div className="sticky top-28 overflow-hidden border border-[#14263d]/20 bg-[#14263d] text-white shadow-[18px_18px_0_rgba(20,38,61,0.1)]">
-      {/* Cabecera del panel */}
-      <div className="relative overflow-hidden border-b border-white/15 px-6 py-7 lg:px-8">
-        <div className="pointer-events-none absolute -right-20 -top-24 h-60 w-60 rounded-full border border-white/10">
-          <div className="absolute inset-12 rounded-full border border-white/10" />
-          <div className="absolute inset-24 rounded-full border border-[#ff5f49]/30" />
-        </div>
+    <div className="space-y-5">
 
-        <div className="relative z-10">
-          <div className="mb-7 flex items-center justify-between">
-            <span className="font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-[#ff7764]">
-              Booking Manifest
-            </span>
-
-            <span className="font-mono text-[8px] text-white/30">
-              MAP—{String(experience.id).padStart(2, "0")}
-            </span>
+      <div className="sticky top-28 overflow-hidden border border-[#14263d]/20 bg-[#14263d] text-white shadow-[18px_18px_0_rgba(20,38,61,0.1)]">
+        {/* Cabecera del panel */}
+        <div className="relative overflow-hidden border-b border-white/15 px-6 py-7 lg:px-8">
+          <div className="pointer-events-none absolute -right-20 -top-24 h-60 w-60 rounded-full border border-white/10">
+            <div className="absolute inset-12 rounded-full border border-white/10" />
+            <div className="absolute inset-24 rounded-full border border-[#ff5f49]/30" />
           </div>
 
-          <span className="mb-3 block text-[8px] font-bold uppercase tracking-[0.28em] text-white/35">
-            <T>Valor de Inversión</T>
-          </span>
+          <div className="relative z-10">
+            <div className="mb-7 flex items-center justify-between">
+              <span className="font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-[#ff7764]">
+                Booking Manifest
+              </span>
 
-          <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
-            <span className="break-words text-3xl font-black tracking-[-0.04em] text-white sm:text-4xl">
-              {formatPrice(experience.price)}
+              <span className="font-mono text-[8px] text-white/30">
+                MAP—{String(experience.id).padStart(2, "0")}
+              </span>
+            </div>
+
+            <span className="mb-3 block text-[8px] font-bold uppercase tracking-[0.28em] text-white/35">
+              <T>Valor de Inversión</T>
             </span>
 
-            <span className="pb-1 text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">
-              <T>p/p</T>
-            </span>
+            <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
+              <span className="break-words text-3xl font-black tracking-[-0.04em] text-white sm:text-4xl">
+                {formatPrice(experience.price)}
+              </span>
+
+              <span className="pb-1 text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">
+                <T>p/p</T>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Controles */}
-      <div className="px-6 py-8 lg:px-8">
-        <div className="space-y-7">
-          {isPersonalized && (
-            <div className="animate-fade-in">
+        {/* Controles */}
+        <div className="px-6 py-8 lg:px-8">
+          <div className="space-y-7">
+            {isPersonalized && (
+              <div className="animate-fade-in">
+                <div className="mb-3 flex items-center justify-between">
+                  <label className="text-[8px] font-bold uppercase tracking-[0.24em] text-white/40">
+                    <T>Destino Deseado</T>
+                  </label>
+
+                  <span className="font-mono text-[8px] text-[#ff7764]">
+                    01A
+                  </span>
+                </div>
+
+                <Input
+                  type="text"
+                  name="customDestination"
+                  value={customDestination}
+                  onChange={(e) => setCustomDestination(e.target.value)}
+                  placeholder={phDestino}
+                  autoComplete="off"
+                  className="h-14 rounded-none border border-white/20 bg-white/[0.06] px-4 font-semibold text-white shadow-none placeholder:text-white/25 focus-visible:border-[#ff5f49] focus-visible:ring-0"
+                />
+              </div>
+            )}
+
+            <div>
               <div className="mb-3 flex items-center justify-between">
                 <label className="text-[8px] font-bold uppercase tracking-[0.24em] text-white/40">
-                  <T>Destino Deseado</T>
+                  <T>Fecha de Inicio</T>
                 </label>
 
                 <span className="font-mono text-[8px] text-[#ff7764]">
-                  01A
+                  {isPersonalized ? "01B" : "01A"}
                 </span>
               </div>
 
               <Input
-                type="text"
-                name="customDestination"
-                value={customDestination}
-                onChange={(e) => setCustomDestination(e.target.value)}
-                placeholder={phDestino}
-                autoComplete="off"
-                className="h-14 rounded-none border border-white/20 bg-white/[0.06] px-4 font-semibold text-white shadow-none placeholder:text-white/25 focus-visible:border-[#ff5f49] focus-visible:ring-0"
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                min={minDateStr}
+                className="h-14 rounded-none border border-white/20 bg-white/[0.06] px-4 font-semibold text-white shadow-none [color-scheme:dark] focus-visible:border-[#ff5f49] focus-visible:ring-0"
               />
             </div>
-          )}
 
-          <div>
-            <div className="mb-3 flex items-center justify-between">
-              <label className="text-[8px] font-bold uppercase tracking-[0.24em] text-white/40">
-                <T>Fecha de Inicio</T>
-              </label>
+            <div>
+              <div className="mb-3 flex items-center justify-between">
+                <label className="text-[8px] font-bold uppercase tracking-[0.24em] text-white/40">
+                  <T>Viajeros</T>
+                </label>
 
-              <span className="font-mono text-[8px] text-[#ff7764]">
-                {isPersonalized ? "01B" : "01A"}
-              </span>
+                <span className="font-mono text-[8px] text-[#ff7764]">
+                  {isPersonalized ? "01C" : "01B"}
+                </span>
+              </div>
+
+              <div className="grid h-14 grid-cols-[54px_1fr_54px] border border-white/20 bg-white/[0.06]">
+                <button
+                  className="flex items-center justify-center border-r border-white/15 text-white/65 transition-colors hover:bg-white hover:text-[#14263d]"
+                  onClick={() => setPeople(Math.max(1, people - 1))}
+                  aria-label="Restar viajero"
+                >
+                  <Minus className="h-4 w-4" />
+                </button>
+
+                <span className="flex items-center justify-center font-mono text-lg font-black text-white">
+                  {String(people).padStart(2, "0")}
+                </span>
+
+                <button
+                  className="flex items-center justify-center border-l border-white/15 text-white/65 transition-colors hover:bg-[#ff5f49] hover:text-white"
+                  onClick={() => setPeople(people + 1)}
+                  aria-label="Agregar viajero"
+                >
+                  <Plus className="h-4 w-4" />
+                </button>
+              </div>
             </div>
-
-            <Input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              min={minDateStr}
-              className="h-14 rounded-none border border-white/20 bg-white/[0.06] px-4 font-semibold text-white shadow-none [color-scheme:dark] focus-visible:border-[#ff5f49] focus-visible:ring-0"
-            />
           </div>
 
-          <div>
-            <div className="mb-3 flex items-center justify-between">
-              <label className="text-[8px] font-bold uppercase tracking-[0.24em] text-white/40">
-                <T>Viajeros</T>
-              </label>
+          <Button
+            className="group mt-8 h-16 w-full rounded-none border border-[#ff5f49] bg-[#ff5f49] px-6 text-[9px] font-black uppercase tracking-[0.22em] text-white shadow-none transition-all duration-300 hover:bg-white hover:text-[#14263d] disabled:cursor-not-allowed disabled:opacity-40"
+            onClick={handleAddToCart}
+            disabled={
+              !selectedDate ||
+              isAdding ||
+              (isPersonalized && !customDestination.trim())
+            }
+          >
+            {isAdding && (
+              <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+            )}
 
-              <span className="font-mono text-[8px] text-[#ff7764]">
-                {isPersonalized ? "01C" : "01B"}
-              </span>
-            </div>
+            {isAdding ? (
+              <T>Integrando...</T>
+            ) : (
+              <T>Añadir al Carrito</T>
+            )}
 
-            <div className="grid h-14 grid-cols-[54px_1fr_54px] border border-white/20 bg-white/[0.06]">
-              <button
-                className="flex items-center justify-center border-r border-white/15 text-white/65 transition-colors hover:bg-white hover:text-[#14263d]"
-                onClick={() => setPeople(Math.max(1, people - 1))}
-                aria-label="Restar viajero"
-              >
-                <Minus className="h-4 w-4" />
-              </button>
+            {!isAdding && (
+              <ArrowRight className="ml-3 h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
+            )}
+          </Button>
+          
+          <div className="mt-8 flex items-center justify-between border-t border-white/15 pt-4">
+            <span className="font-mono text-[7px] uppercase tracking-[0.22em] text-white/25">
+              Mapira secure selection
+            </span>
 
-              <span className="flex items-center justify-center font-mono text-lg font-black text-white">
-                {String(people).padStart(2, "0")}
-              </span>
-
-              <button
-                className="flex items-center justify-center border-l border-white/15 text-white/65 transition-colors hover:bg-[#ff5f49] hover:text-white"
-                onClick={() => setPeople(people + 1)}
-                aria-label="Agregar viajero"
-              >
-                <Plus className="h-4 w-4" />
-              </button>
-            </div>
+            <span className="h-2 w-2 rounded-full bg-[#ff5f49]" />
           </div>
         </div>
+        {/* Opciones adicionales */}
+        <div className="border border-[#14263d]/20 bg-[#f4f0e7]">
+          <div className="border-b border-[#14263d]/15 bg-[#e8e1d4] px-6 py-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="mb-1 font-mono text-[8px] font-bold uppercase tracking-[0.26em] text-[#ff5f49]">
+                  Mapira / Alternatives
+                </p>
 
-        <Button
-          className="group mt-8 h-16 w-full rounded-none border border-[#ff5f49] bg-[#ff5f49] px-6 text-[9px] font-black uppercase tracking-[0.22em] text-white shadow-none transition-all duration-300 hover:bg-white hover:text-[#14263d] disabled:cursor-not-allowed disabled:opacity-40"
-          onClick={handleAddToCart}
-          disabled={
-            !selectedDate ||
-            isAdding ||
-            (isPersonalized && !customDestination.trim())
-          }
-        >
-          {isAdding && (
-            <Loader2 className="mr-3 h-5 w-5 animate-spin" />
-          )}
+                <h3 className="text-sm font-black uppercase tracking-[-0.01em] text-[#14263d]">
+                  <T>Otras opciones</T>
+                </h3>
+              </div>
 
-          {isAdding ? (
-            <T>Integrando...</T>
-          ) : (
-            <T>Añadir al Carrito</T>
-          )}
+              <span className="h-2 w-2 bg-[#ff5f49]" />
+            </div>
+          </div>
 
-          {!isAdding && (
-            <ArrowRight className="ml-3 h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
-          )}
-        </Button>
+          <div className="space-y-3 p-5">
+            <Button
+              type="button"
+              onClick={() => router.push(`/${locale}/cotizar`)}
+              className="h-14 w-full rounded-none border border-[#14263d] bg-[#14263d] px-5 text-[8px] font-bold uppercase tracking-[0.18em] text-white shadow-none transition-all hover:border-[#ff5f49] hover:bg-[#ff5f49]"
+            >
+              <T>Solicitar version personalizada</T>
+            </Button>
 
-        <div className="mt-8 flex items-center justify-between border-t border-white/15 pt-4">
-          <span className="font-mono text-[7px] uppercase tracking-[0.22em] text-white/25">
-            Mapira secure selection
-          </span>
-
-          <span className="h-2 w-2 rounded-full bg-[#ff5f49]" />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.push(`/${locale}/experiencias`)}
+              className="h-14 w-full rounded-none border border-[#14263d]/25 bg-transparent px-5 text-[8px] font-bold uppercase tracking-[0.18em] text-[#14263d] shadow-none transition-all hover:border-[#14263d] hover:bg-[#14263d] hover:text-white"
+            >
+              <T>Ver mas planes</T>
+            </Button>
+          </div>
         </div>
       </div>
+      
     </div>
   );
 

@@ -273,7 +273,7 @@ function CheckoutContent() {
 
           <div className="border-l-2 border-[#ff5f49] pl-5">
             <p className="text-sm font-medium leading-relaxed text-[#14263d]/55">
-              <T>Revisa tus datos, confirma las coordenadas de facturación y</T>
+              <T>Revisa tus datos, confirma las coordenadas de facturación y </T>
               <T>autoriza el pago de tu ruta.</T>
             </p>
           </div>
@@ -724,6 +724,15 @@ function CheckoutContent() {
                   ) : (
                     <T>Autorizar Pago</T>
                   )}
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="mt-3 h-14 w-full rounded-none border border-[#14263d]/25 bg-transparent px-6 text-[9px] font-bold uppercase tracking-[0.22em] text-[#14263d] shadow-none transition-all hover:border-[#14263d] hover:bg-[#14263d] hover:text-white"
+                >
+                  <Link href={`/${locale}/carrito`}>
+                    <T>Regresar al carrito</T>
+                  </Link>
                 </Button>
               </div>
 
